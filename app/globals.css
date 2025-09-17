@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --purple-primary: #9152DE;
+    --purple-dark: #5F29A1;
+    --blue-accent: #204782;
+    --gray-dark: #2C3E50;
+    --gray-medium: #7F8C8D;
+    --gray-light: #ECF0F1;
+    --white-soft: #FAFAFA;
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+    --info: #3B82F6;
+  }
+}
+
+@layer base {
+  body {
+    @apply text-gray-dark bg-white-soft;
+  }
+}
