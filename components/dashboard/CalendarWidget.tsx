@@ -416,15 +416,15 @@ export default function CalendarWidget() {
       {/* Day Details Modal */}
       {isModalOpen && selectedDay && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+          <div className="!bg-white rounded-lg max-w-4xl w-full max-h-[70vh] overflow-y-auto shadow-2xl" style={{ backgroundColor: 'white' }}>
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-900">
                 {format(selectedDay.date, 'EEEE, MMMM d')}
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 <X className="h-5 w-5 text-gray-500" />
               </button>
@@ -432,97 +432,105 @@ export default function CalendarWidget() {
 
             {/* Modal Content */}
             <div className="p-6">
-              {/* Hours Worked Section */}
-              <div className="mb-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <Clock className="h-5 w-5 text-[#9152DE]" />
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">Time Summary</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Left Column */}
+                <div>
+                  {/* Hours Worked Section */}
+                  <div className="mb-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <Clock className="h-5 w-5 text-[#9152DE]" />
+                      <h3 className="text-lg font-medium text-gray-900">Time Summary</h3>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-sm text-gray-600">Hours Worked</p>
+                        <p className="text-2xl font-bold text-[#9152DE]">{selectedDay.hoursWorked}h</p>
+                      </div>
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-sm text-gray-600">Target Hours</p>
+                        <p className="text-2xl font-bold text-gray-900">{selectedDay.targetHours}h</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Description Section */}
+                  {selectedDay.description && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">Description</h3>
+                      <p className="text-gray-700 bg-gray-50 rounded-lg p-4">
+                        {selectedDay.description}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Projects Section */}
+                  {selectedDay.projects && selectedDay.projects.length > 0 && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">Projects</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedDay.projects.map((project, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-[#9152DE] text-white rounded-full text-sm font-medium"
+                          >
+                            {project}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Hours Worked</p>
-                    <p className="text-2xl font-bold text-[#9152DE]">{selectedDay.hoursWorked}h</p>
-                  </div>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Target Hours</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{selectedDay.targetHours}h</p>
-                  </div>
+
+                {/* Right Column */}
+                <div>
+                  {/* Breaks Section */}
+                  {selectedDay.breaks !== undefined && (
+                    <div className="mb-6">
+                      <h3 className="text-lg font-medium text-gray-900 mb-3">Break Time</h3>
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <p className="text-lg font-semibold text-gray-900">{selectedDay.breaks} minutes</p>
+                        <p className="text-sm text-gray-600">
+                          {selectedDay.breaks >= 30 && selectedDay.breaks <= 60 ? 'Healthy break time' :
+                           selectedDay.breaks > 90 ? 'Consider reducing break time' :
+                           'Consider taking more breaks'}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* AI Performance Score */}
+                  {selectedDay.efficiency !== undefined && selectedDay.hoursWorked !== undefined && selectedDay.targetHours !== undefined && selectedDay.breaks !== undefined && (
+                    <div className="mb-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Star className="h-5 w-5 text-[#9152DE]" />
+                        <h3 className="text-lg font-medium text-gray-900">AI Performance Score</h3>
+                      </div>
+                      <div className="bg-gradient-to-r from-[#9152DE]/10 to-[#5F29A1]/10 rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-3xl font-bold text-[#9152DE]">
+                            {getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks)}
+                          </span>
+                          <span className={`text-lg font-medium ${getScoreColor(getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks))}`}>
+                            {getScoreLabel(getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks))}
+                          </span>
+                        </div>
+                        <div className="text-sm text-gray-600">
+                          <p>• Base efficiency: {selectedDay.efficiency}%</p>
+                          <p>• Hours balance: {((selectedDay.hoursWorked / selectedDay.targetHours) * 100).toFixed(0)}%</p>
+                          <p>• Break time: {selectedDay.breaks} minutes</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              {/* Description Section */}
-              {selectedDay.description && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">Description</h3>
-                  <p className="text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    {selectedDay.description}
-                  </p>
-                </div>
-              )}
-
-              {/* Projects Section */}
-              {selectedDay.projects && selectedDay.projects.length > 0 && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">Projects</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedDay.projects.map((project, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-[#9152DE] text-white rounded-full text-sm font-medium"
-                      >
-                        {project}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Breaks Section */}
-              {selectedDay.breaks !== undefined && (
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">Break Time</h3>
-                  <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{selectedDay.breaks} minutes</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      {selectedDay.breaks >= 30 && selectedDay.breaks <= 60 ? 'Healthy break time' :
-                       selectedDay.breaks > 90 ? 'Consider reducing break time' :
-                       'Consider taking more breaks'}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* AI Performance Score */}
-              {selectedDay.efficiency !== undefined && selectedDay.hoursWorked !== undefined && selectedDay.targetHours !== undefined && selectedDay.breaks !== undefined && (
-                <div className="mb-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    <Star className="h-5 w-5 text-[#9152DE]" />
-                    <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">AI Performance Score</h3>
-                  </div>
-                  <div className="bg-gradient-to-r from-[#9152DE]/10 to-[#5F29A1]/10 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-3xl font-bold text-[#9152DE]">
-                        {getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks)}
-                      </span>
-                      <span className={`text-lg font-medium ${getScoreColor(getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks))}`}>
-                        {getScoreLabel(getAIScore(selectedDay.efficiency, selectedDay.hoursWorked, selectedDay.targetHours, selectedDay.breaks))}
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      <p>• Base efficiency: {selectedDay.efficiency}%</p>
-                      <p>• Hours balance: {((selectedDay.hoursWorked / selectedDay.targetHours) * 100).toFixed(0)}%</p>
-                      <p>• Break time: {selectedDay.breaks} minutes</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
 
             {/* Modal Footer */}
-            <div className="flex justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex justify-end gap-3 p-6 border-t border-gray-200">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 Close
               </button>
