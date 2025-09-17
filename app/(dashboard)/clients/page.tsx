@@ -35,7 +35,9 @@ import {
   Activity,
   Briefcase,
   CreditCard,
-  AlertCircle
+  AlertCircle,
+  Grid3X3,
+  List
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
 
