@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import ClockWidget from '@/components/dashboard/ClockWidget';
 import TasksWidget from '@/components/dashboard/TasksWidget';
@@ -12,6 +14,19 @@ import { Clock, CheckCircle, Users, TrendingUp } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Redirect clients to client-portal
+    if (user?.role === 'client') {
+      router.push('/client-portal');
+    }
+  }, [user, router]);
+
+  // Don't render dashboard for clients
+  if (user?.role === 'client') {
+    return null;
+  }
 
   const stats = [
     { label: 'Hours Today', value: '6.5', icon: Clock, color: 'text-blue-600' },

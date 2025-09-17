@@ -45,8 +45,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     setIsLoading(false);
 
-    // All users redirect to dashboard after login
-    router.push('/dashboard');
+    // Redirect based on user role
+    if (validatedUser.role === 'client') {
+      router.push('/client-portal');
+    } else {
+      router.push('/dashboard');
+    }
   }, [router]);
 
   const logout = useCallback(() => {
