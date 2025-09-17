@@ -13,6 +13,7 @@ import {
   X
 } from 'lucide-react';
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 interface HeaderProps {
   onMenuToggle?: () => void;
@@ -33,7 +34,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -74,6 +75,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
           </div>
 
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
             <div className="relative">
               <button
                 onClick={() => setIsNotificationOpen(!isNotificationOpen)}
