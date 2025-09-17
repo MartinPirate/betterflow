@@ -13,7 +13,8 @@ import {
   CalendarDays,
   UserCheck,
   Bell,
-  HelpCircle
+  HelpCircle,
+  Shield
 } from 'lucide-react';
 import { UserRole } from '@/types/auth';
 
@@ -26,6 +27,12 @@ export interface MenuItem {
 }
 
 export const menuItems: MenuItem[] = [
+  {
+    label: 'Client Portal',
+    href: '/client-portal',
+    icon: Shield,
+    roles: ['client']
+  },
   {
     label: 'Dashboard',
     href: '/dashboard',
