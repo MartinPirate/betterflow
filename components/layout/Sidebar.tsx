@@ -30,14 +30,14 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-gray-900/50 lg:hidden z-30"
+          className="fixed inset-0 bg-gray-900/50 lg:hidden z-[90]"
           onClick={onClose}
         />
       )}
 
       <aside
         className={cn(
-          'fixed lg:static inset-y-0 left-0 z-40 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-all duration-300 ease-in-out lg:translate-x-0',
+          'fixed top-0 h-screen left-0 z-50 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-all duration-300 ease-in-out lg:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full',
           isCollapsed ? 'w-20' : 'w-64'
         )}

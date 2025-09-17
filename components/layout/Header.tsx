@@ -20,9 +20,10 @@ import { ThemeToggle } from '@/components/theme-toggle';
 interface HeaderProps {
   onMenuToggle?: () => void;
   isMobileMenuOpen?: boolean;
+  isCollapsed?: boolean;
 }
 
-export default function Header({ onMenuToggle, isMobileMenuOpen = false }: HeaderProps) {
+export default function Header({ onMenuToggle, isMobileMenuOpen = false, isCollapsed = false }: HeaderProps) {
   const { user, logout } = useAuth();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -36,9 +37,9 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <header className="bg-white dark:bg-[#263244] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-40">
+    <header className="bg-white dark:bg-[#263244] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="relative flex items-center h-16">
           {/* Left Section - Menu Toggle */}
           <div className="flex items-center">
             <button
@@ -54,10 +55,10 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
             </button>
           </div>
 
-          {/* Center Section - Search Bar and AI Button */}
-          <div className="flex-1 flex items-center justify-center gap-3 mx-4">
-            {/* Search Input */}
-            <div className="relative w-full max-w-xs">
+          {/* Center Section - Search Bar and AI Button - Positioned to start at 50% */}
+          <div className="absolute left-1/2 flex items-center gap-2">
+            {/* Search Input - Reduced width */}
+            <div className="relative w-48 lg:w-56">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Search className="h-4 w-4 text-gray-400 dark:text-gray-500" />
               </div>
@@ -69,15 +70,15 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
               />
             </div>
 
-            {/* AI Button */}
-            <button className="flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-full hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
-              <Sparkles className="h-4 w-4" />
-              <span className="text-sm font-medium hidden sm:inline">Ask BF-AI</span>
+            {/* AI Button - Smaller size */}
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-full hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
+              <Sparkles className="h-3.5 w-3.5 animate-spin" />
+              <span className="text-xs font-medium hidden sm:inline">Ask BF-AI</span>
             </button>
           </div>
 
           {/* Right Section - Actions */}
-          <div className="flex items-center space-x-4 flex-1 justify-end">
+          <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <div className="relative">
               <button

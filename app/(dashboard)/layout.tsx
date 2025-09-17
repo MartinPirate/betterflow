@@ -16,6 +16,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const { user, isLoading } = useAuth();
   const router = useRouter();
 
@@ -42,20 +43,22 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#1F2937]">
-      <Header
-        onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        isMobileMenuOpen={isMobileMenuOpen}
+      {/* Sidebar - Fixed position on left */}
+      <Sidebar
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
 
-      <div className="flex">
-        <nav id="main-navigation" aria-label="Main navigation">
-          <Sidebar
-            isOpen={isMobileMenuOpen}
-            onClose={() => setIsMobileMenuOpen(false)}
-          />
-        </nav>
+      {/* Content wrapper - pushed right by sidebar width */}
+      <div className="lg:ml-64">
+        {/* Header - Full width of remaining space */}
+        <Header
+          onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          isMobileMenuOpen={isMobileMenuOpen}
+        />
 
-        <main id="main-content" className="flex-1 lg:ml-0" role="main">
+        {/* Main content */}
+        <main id="main-content" role="main">
           <div className="p-4 sm:p-6 lg:p-8">
             <Breadcrumbs />
             <PageTransition>
