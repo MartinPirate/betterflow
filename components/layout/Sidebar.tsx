@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { getMenuItemsForRole } from '@/lib/navigation/menu-items';
 import Link from 'next/link';
@@ -11,19 +9,22 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
-export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen = true, onClose, isCollapsed = false, onToggleCollapse }: SidebarProps) {
   const { user } = useAuth();
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   if (!user) return null;
 
   const menuItems = getMenuItemsForRole(user.role);
 
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+    if (onToggleCollapse) {
+      onToggleCollapse();
+    }
   };
 
   return (
@@ -39,7 +40,9 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         className={cn(
           'fixed top-0 h-screen left-0 z-50 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-all duration-300 ease-in-out lg:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          isCollapsed ? 'w-20' : 'w-64'
+          // Mobile: always full width (w-64), Desktop: responsive width based on collapse
+          'w-64',
+          isCollapsed ? 'lg:w-20' : 'lg:w-64'
         )}
       >
         <div className="flex flex-col h-full">

@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { KeyboardShortcutsDialog } from '@/components/keyboard-shortcuts-dialog';
 import PageTransition from '@/components/animations/PageTransition';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 export default function DashboardLayout({
   children,
@@ -47,10 +48,17 @@ export default function DashboardLayout({
       <Sidebar
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
+        isCollapsed={isSidebarCollapsed}
+        onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
       />
 
       {/* Content wrapper - pushed right by sidebar width */}
-      <div className="lg:ml-64">
+      <div className={cn(
+        "transition-all duration-300 ease-in-out",
+        // On mobile, no margin (sidebar overlays)
+        // On desktop, margin matches sidebar width
+        isSidebarCollapsed ? "lg:ml-20" : "lg:ml-64"
+      )}>
         {/* Header - Full width of remaining space */}
         <Header
           onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
