@@ -73,8 +73,7 @@ export const menuItems: MenuItem[] = [
     label: 'Companies',
     href: '/companies',
     icon: Building2,
-    roles: ['superadmin'],
-    badge: 'Super Admin'
+    roles: ['superadmin']
   },
   {
     label: 'Reports',
@@ -86,8 +85,7 @@ export const menuItems: MenuItem[] = [
     label: 'Automations',
     href: '/automations',
     icon: Bot,
-    roles: ['superadmin', 'admin'],
-    badge: 'AI'
+    roles: ['superadmin', 'admin']
   },
   {
     label: 'Integrations',
