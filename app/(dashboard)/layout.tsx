@@ -48,12 +48,14 @@ export default function DashboardLayout({
       />
 
       <div className="flex">
-        <Sidebar
-          isOpen={isMobileMenuOpen}
-          onClose={() => setIsMobileMenuOpen(false)}
-        />
+        <nav id="main-navigation" aria-label="Main navigation">
+          <Sidebar
+            isOpen={isMobileMenuOpen}
+            onClose={() => setIsMobileMenuOpen(false)}
+          />
+        </nav>
 
-        <main className="flex-1 lg:ml-0">
+        <main id="main-content" className="flex-1 lg:ml-0" role="main">
           <div className="p-4 sm:p-6 lg:p-8">
             <Breadcrumbs />
             <PageTransition>

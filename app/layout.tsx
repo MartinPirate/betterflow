@@ -27,6 +27,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SkipLinks />
           <AuthProvider>{children}</AuthProvider>
           <Toaster />
         </ThemeProvider>
