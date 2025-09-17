@@ -43,16 +43,27 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         )}
       >
         <div className="flex flex-col h-full">
-          {/* Collapse Toggle Button */}
+          {/* Logo and Collapse Toggle */}
           <div className={cn(
             "flex items-center p-4 border-b border-gray-200 dark:border-gray-700",
             isCollapsed ? "justify-center" : "justify-between"
           )}>
-            {!isCollapsed && (
-              <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Menu
-              </span>
-            )}
+            <div className="flex items-center">
+              {isCollapsed ? (
+                <div className="w-10 h-10 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">BF</span>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center mr-3">
+                    <span className="text-white font-bold text-lg">BF</span>
+                  </div>
+                  <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    BetterFlow
+                  </span>
+                </div>
+              )}
+            </div>
             <button
               onClick={toggleCollapse}
               className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors hidden lg:block"
