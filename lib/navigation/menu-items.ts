@@ -11,7 +11,9 @@ import {
   Settings,
   BarChart3,
   CalendarDays,
-  UserCheck
+  UserCheck,
+  Bell,
+  HelpCircle
 } from 'lucide-react';
 import { UserRole } from '@/types/auth';
 
@@ -93,10 +95,23 @@ export const menuItems: MenuItem[] = [
     roles: ['superadmin', 'admin', 'user']
   },
   {
+    label: 'Notifications',
+    href: '/notifications',
+    icon: Bell,
+    roles: ['superadmin', 'admin', 'user'],
+    badge: '2'
+  },
+  {
     label: 'Settings',
     href: '/settings',
     icon: Settings,
     roles: ['superadmin', 'admin', 'user']
+  },
+  {
+    label: 'Help & Support',
+    href: '/help',
+    icon: HelpCircle,
+    roles: ['superadmin', 'admin', 'user', 'client']
   }
 ];
 

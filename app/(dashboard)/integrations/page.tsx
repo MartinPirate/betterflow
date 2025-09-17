@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -29,6 +29,7 @@ import {
   Trash2,
   Download,
   Upload,
+  Copy,
   Activity,
   Database,
   Mail,
@@ -40,6 +41,8 @@ import {
   CreditCard,
   Package,
   Cpu,
+  Eye,
+  EyeOff,
   Cloud,
   Server,
   Code,
@@ -49,10 +52,11 @@ import {
   ArrowRight,
   ExternalLink,
   Info,
-  Lock
+  Lock,
+  Webhook
 } from 'lucide-react';
 import { FaGithub, FaSlack, FaJira, FaTrello, FaGoogle, FaMicrosoft, FaDropbox, FaStripe, FaSalesforce, FaLinkedin, FaTwitter, FaFacebook } from 'react-icons/fa';
-import { SiNotion, SiAsana, SiZoom, SiZapier, SiWebhook, SiPostgresql, SiMongodb, SiRedis } from 'react-icons/si';
+import { SiNotion, SiAsana, SiZoom, SiZapier, SiPostgresql, SiMongodb, SiRedis } from 'react-icons/si';
 
 interface Integration {
   id: string;
@@ -234,13 +238,13 @@ export default function IntegrationsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Integrations</h1>
           <p className="text-gray-500 mt-1">Connect and manage third-party services</p>
         </div>
+        <Button
+          onClick={() => setIsAddOpen(true)}
+          className="bg-[#9152DE] hover:bg-[#5F29A1]">
+          <Plus className="h-4 w-4 mr-2" />
+          Add Integration
+        </Button>
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-[#9152DE] hover:bg-[#5F29A1]">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Integration
-            </Button>
-          </DialogTrigger>
           <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Add New Integration</DialogTitle>
@@ -530,7 +534,7 @@ export default function IntegrationsPage() {
                 <div className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <SiWebhook className="h-5 w-5 text-[#9152DE]" />
+                      <Webhook className="h-5 w-5 text-[#9152DE]" />
                       <h4 className="font-medium">GitHub Push Events</h4>
                     </div>
                     <Badge className="bg-green-100 text-green-800">Active</Badge>
@@ -554,7 +558,7 @@ export default function IntegrationsPage() {
                 <div className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <SiWebhook className="h-5 w-5 text-[#9152DE]" />
+                      <Webhook className="h-5 w-5 text-[#9152DE]" />
                       <h4 className="font-medium">Stripe Payment Events</h4>
                     </div>
                     <Badge className="bg-green-100 text-green-800">Active</Badge>
