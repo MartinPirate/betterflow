@@ -73,10 +73,10 @@ export default function AIInsightsWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center gap-2 mb-4">
         <Bot className="h-5 w-5 text-[#9152DE]" />
-        <h2 className="text-lg font-semibold text-gray-900">AI Insights</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">AI Insights</h2>
         <span className="ml-auto px-2 py-0.5 text-xs font-medium bg-[#9152DE]/10 text-[#9152DE] rounded-full">
           Powered by AI
         </span>
@@ -93,10 +93,10 @@ export default function AIInsightsWidget() {
                 {getInsightIcon(insight.type)}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-semibold text-gray-900 mb-1">
+                <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   {insight.title}
                 </h3>
-                <p className="text-xs text-gray-600 mb-2">
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-2">
                   {insight.description}
                 </p>
                 {insight.action && (
@@ -110,7 +110,7 @@ export default function AIInsightsWidget() {
         ))}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-200">
+      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         <button className="w-full px-4 py-2 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white text-sm font-medium rounded-lg hover:from-[#5F29A1] hover:to-[#204782] transition-all">
           Ask BetterFlow AI
         </button>

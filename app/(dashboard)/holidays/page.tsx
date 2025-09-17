@@ -211,7 +211,7 @@ export default function HolidaysPage() {
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Holidays Management</h2>
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-gray-400">
             Manage public holidays, company events, and special occasions
           </p>
         </div>
@@ -335,7 +335,7 @@ export default function HolidaysPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{holidayStats.total}</div>
-            <p className="text-xs text-gray-500 mt-1">For year {selectedYear}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">For year {selectedYear}</p>
           </CardContent>
         </Card>
         <Card>
@@ -345,7 +345,7 @@ export default function HolidaysPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{holidayStats.public}</div>
-            <p className="text-xs text-gray-500 mt-1">Government holidays</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Government holidays</p>
           </CardContent>
         </Card>
         <Card>
@@ -355,7 +355,7 @@ export default function HolidaysPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{holidayStats.company}</div>
-            <p className="text-xs text-gray-500 mt-1">Organization-wide</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Organization-wide</p>
           </CardContent>
         </Card>
         <Card>
@@ -365,7 +365,7 @@ export default function HolidaysPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{holidayStats.thisMonth}</div>
-            <p className="text-xs text-gray-500 mt-1">Upcoming holidays</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Upcoming holidays</p>
           </CardContent>
         </Card>
       </div>
@@ -423,7 +423,7 @@ export default function HolidaysPage() {
                               holiday.type === 'company' ? 'bg-purple-500' :
                               'bg-orange-500'
                             }`} />
-                            <span className="text-gray-600 truncate">
+                            <span className="text-gray-600 dark:text-gray-400 truncate">
                               {new Date(holiday.date).getDate()} - {holiday.name}
                             </span>
                           </div>
@@ -501,7 +501,7 @@ export default function HolidaysPage() {
                 {filteredHolidays.map((holiday) => (
                   <div
                     key={holiday.id}
-                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 dark:bg-gray-900 transition-colors"
                   >
                     <div className="flex items-center space-x-4">
                       <div className={`p-2 rounded-lg ${holiday.color}`}>
@@ -521,7 +521,7 @@ export default function HolidaysPage() {
                             </Badge>
                           )}
                         </div>
-                        <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500">
+                        <div className="flex items-center space-x-4 mt-1 text-sm text-gray-500 dark:text-gray-400">
                           <span className="flex items-center">
                             <Calendar className="h-3 w-3 mr-1" />
                             {new Date(holiday.date).toLocaleDateString()}
@@ -539,7 +539,7 @@ export default function HolidaysPage() {
                           </span>
                         </div>
                         {holiday.description && (
-                          <p className="text-sm text-gray-600 mt-1">{holiday.description}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{holiday.description}</p>
                         )}
                       </div>
                     </div>
@@ -590,7 +590,7 @@ export default function HolidaysPage() {
                           </div>
                           <div>
                             <p className="font-medium text-sm">{holiday.name}</p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                               {new Date(holiday.date).toLocaleDateString()}
                             </p>
                           </div>
@@ -615,7 +615,7 @@ export default function HolidaysPage() {
                     <div key={month.month} className="flex items-center justify-between">
                       <div>
                         <p className="font-medium text-sm">{month.month}</p>
-                        <p className="text-xs text-gray-500">
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
                           {month.holidays.join(', ')}
                         </p>
                       </div>
@@ -640,17 +640,17 @@ export default function HolidaysPage() {
                   <div className="text-center p-4 border rounded-lg">
                     <Users className="h-8 w-8 mx-auto mb-2 text-purple-600" />
                     <p className="text-2xl font-bold">250</p>
-                    <p className="text-sm text-gray-500">Total Employees</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Total Employees</p>
                   </div>
                   <div className="text-center p-4 border rounded-lg">
                     <Clock className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                     <p className="text-2xl font-bold">120</p>
-                    <p className="text-sm text-gray-500">Business Hours Lost</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Business Hours Lost</p>
                   </div>
                   <div className="text-center p-4 border rounded-lg">
                     <Building className="h-8 w-8 mx-auto mb-2 text-green-600" />
                     <p className="text-2xl font-bold">5</p>
-                    <p className="text-sm text-gray-500">Offices Affected</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Offices Affected</p>
                   </div>
                 </div>
                 <div className="border rounded-lg p-4">
@@ -666,7 +666,7 @@ export default function HolidaysPage() {
                               style={{ width: `${Math.random() * 100}%` }}
                             />
                           </div>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
                             {Math.floor(Math.random() * 50 + 10)} employees
                           </span>
                         </div>
@@ -690,7 +690,7 @@ export default function HolidaysPage() {
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <h4 className="font-semibold">Auto-approve Public Holidays</h4>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Automatically mark public holidays as approved for all employees
                     </p>
                   </div>
@@ -702,7 +702,7 @@ export default function HolidaysPage() {
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <h4 className="font-semibold">Holiday Substitution</h4>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Allow employees to substitute holidays with other working days
                     </p>
                   </div>
@@ -714,7 +714,7 @@ export default function HolidaysPage() {
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <h4 className="font-semibold">Carry Forward Holiday Hours</h4>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Allow unused holiday hours to be carried forward to next year
                     </p>
                   </div>
@@ -726,7 +726,7 @@ export default function HolidaysPage() {
                 <div className="flex items-center justify-between p-4 border rounded-lg">
                   <div>
                     <h4 className="font-semibold">Regional Holiday Management</h4>
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                       Apply different holiday calendars based on employee location
                     </p>
                   </div>

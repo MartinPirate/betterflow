@@ -50,9 +50,9 @@ export default function ClockWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
           <Clock className="h-5 w-5 text-[#9152DE]" />
           Time Tracker
         </h2>
@@ -67,17 +67,17 @@ export default function ClockWidget() {
 
       <div className="space-y-4">
         <div className="text-center">
-          <div className="text-4xl font-bold text-gray-900 mb-2 font-mono">
+          <div className="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2 font-mono">
             {format(currentTime, 'HH:mm:ss')}
           </div>
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             {format(currentTime, 'EEEE, MMMM d, yyyy')}
           </p>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-4">
+        <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
           <div className="text-center">
-            <p className="text-sm text-gray-600 mb-1">Working Time</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Working Time</p>
             <p className="text-2xl font-bold text-[#9152DE] font-mono">{elapsedTime}</p>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function ClockWidget() {
           {isClocked && (
             <button
               onClick={handlePauseToggle}
-              className="px-4 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+              className="px-4 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
             >
               <Coffee className="h-5 w-5" />
               {isPaused ? 'Resume' : 'Break'}
@@ -116,7 +116,7 @@ export default function ClockWidget() {
         </div>
 
         {isClocked && startTime && (
-          <div className="text-center text-xs text-gray-500">
+          <div className="text-center text-xs text-gray-500 dark:text-gray-400">
             Started at {format(startTime, 'HH:mm')}
           </div>
         )}

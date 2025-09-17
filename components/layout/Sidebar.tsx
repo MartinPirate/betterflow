@@ -30,7 +30,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
 
       <aside
         className={cn(
-          'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transform transition-transform duration-300 ease-in-out lg:translate-x-0',
+          'fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-transform duration-300 ease-in-out lg:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
@@ -49,8 +49,8 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     className={cn(
                       'flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
                       isActive
-                        ? 'bg-gradient-to-r from-[#9152DE]/10 to-[#5F29A1]/10 text-[#9152DE] border-l-3 border-[#9152DE]'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                        ? 'bg-gradient-to-r from-[#9152DE]/10 to-[#5F29A1]/10 text-[#9152DE] dark:from-[#9152DE]/20 dark:to-[#5F29A1]/20 dark:text-[#A670F0] border-l-3 border-[#9152DE]'
+                        : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100'
                     )}
                   >
                     <div className="flex items-center space-x-3">
@@ -68,7 +68,7 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
             </nav>
           </div>
 
-          <div className="border-t border-gray-200 p-4">
+          <div className="border-t border-gray-200 dark:border-gray-700 p-4">
             <div className="flex items-center space-x-3">
               <div className="flex-shrink-0">
                 <div className="w-10 h-10 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full flex items-center justify-center">
@@ -78,10 +78,10 @@ export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900 truncate">
+                <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
                   {user.name}
                 </p>
-                <p className="text-xs text-gray-500 truncate">
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
                   {user.company}
                 </p>
                 <p className="text-xs text-[#9152DE] font-medium capitalize">

@@ -205,7 +205,7 @@ export default function HelpPage() {
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Help & Support</h2>
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-gray-400">
             Get help, browse guides, and contact our support team
           </p>
         </div>
@@ -239,7 +239,7 @@ export default function HelpPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">234</div>
-            <p className="text-xs text-gray-500 mt-1">Articles available</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Articles available</p>
           </CardContent>
         </Card>
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
@@ -249,7 +249,7 @@ export default function HelpPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">45</div>
-            <p className="text-xs text-gray-500 mt-1">Video guides</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Video guides</p>
           </CardContent>
         </Card>
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
@@ -259,7 +259,7 @@ export default function HelpPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">2h</div>
-            <p className="text-xs text-gray-500 mt-1">Support response</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Support response</p>
           </CardContent>
         </Card>
         <Card className="hover:shadow-lg transition-shadow cursor-pointer">
@@ -269,7 +269,7 @@ export default function HelpPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">4.8/5</div>
-            <p className="text-xs text-gray-500 mt-1">User rating</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">User rating</p>
           </CardContent>
         </Card>
       </div>
@@ -297,16 +297,16 @@ export default function HelpPage() {
                   </h3>
                   <div className="space-y-3 ml-7">
                     {category.questions.map((item, index) => (
-                      <div key={index} className="border rounded-lg p-4 hover:bg-gray-50">
+                      <div key={index} className="border rounded-lg p-4 hover:bg-gray-50 dark:bg-gray-900">
                         <button className="w-full text-left">
                           <h4 className="font-medium mb-2">{item.q}</h4>
-                          <p className="text-sm text-gray-600 mb-3">{item.a}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{item.a}</p>
                           <div className="flex items-center space-x-4 text-xs">
-                            <button className="flex items-center space-x-1 text-gray-500 hover:text-green-600">
+                            <button className="flex items-center space-x-1 text-gray-500 dark:text-gray-400 hover:text-green-600">
                               <ThumbsUp className="h-3 w-3" />
                               <span>{item.helpful}</span>
                             </button>
-                            <button className="flex items-center space-x-1 text-gray-500 hover:text-red-600">
+                            <button className="flex items-center space-x-1 text-gray-500 dark:text-gray-400 hover:text-red-600">
                               <ThumbsDown className="h-3 w-3" />
                               <span>{item.notHelpful}</span>
                             </button>
@@ -347,9 +347,9 @@ export default function HelpPage() {
                         </div>
                         <div className="flex-1">
                           <h4 className="font-semibold mb-1">{guide.title}</h4>
-                          <p className="text-sm text-gray-600 mb-2">{guide.description}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{guide.description}</p>
                           <div className="flex items-center justify-between">
-                            <span className="text-xs text-gray-500">{guide.duration}</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">{guide.duration}</span>
                             <Badge variant={
                               guide.type === 'beginner' ? 'secondary' :
                               guide.type === 'intermediate' ? 'outline' : 'default'
@@ -413,7 +413,7 @@ export default function HelpPage() {
                       </div>
                     </div>
                     <h4 className="font-medium text-sm">{video.title}</h4>
-                    <div className="flex items-center justify-between text-xs text-gray-500">
+                    <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                       <span>{video.category}</span>
                       <span>{video.views} views</span>
                     </div>
@@ -432,9 +432,9 @@ export default function HelpPage() {
                 <CardTitle>Email Support</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 mb-2">Get help via email</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Get help via email</p>
                 <p className="font-medium">support@betterflow.eu</p>
-                <p className="text-xs text-gray-500 mt-1">Response within 24 hours</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Response within 24 hours</p>
               </CardContent>
             </Card>
 
@@ -444,9 +444,9 @@ export default function HelpPage() {
                 <CardTitle>Live Chat</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 mb-2">Chat with our team</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Chat with our team</p>
                 <p className="font-medium">Available 9 AM - 6 PM EST</p>
-                <p className="text-xs text-gray-500 mt-1">Instant responses</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Instant responses</p>
               </CardContent>
             </Card>
 
@@ -456,9 +456,9 @@ export default function HelpPage() {
                 <CardTitle>Phone Support</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 mb-2">Call us directly</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Call us directly</p>
                 <p className="font-medium">+1 (555) 123-4567</p>
-                <p className="text-xs text-gray-500 mt-1">Mon-Fri, 9 AM - 6 PM EST</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Mon-Fri, 9 AM - 6 PM EST</p>
               </CardContent>
             </Card>
           </div>
@@ -541,7 +541,7 @@ export default function HelpPage() {
                 />
               </div>
               <div className="flex items-center justify-between">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500 dark:text-gray-400">
                   Average response time: 2-4 hours during business hours
                 </p>
                 <Button className="bg-purple-600 hover:bg-purple-700 text-white">

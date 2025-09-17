@@ -34,13 +34,13 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 sticky top-0 z-40">
+    <header className="bg-white dark:bg-[#263244] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <button
               onClick={onMenuToggle}
-              className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 lg:hidden"
+              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden"
             >
               {isMobileMenuOpen ? (
                 <X className="h-6 w-6" />
@@ -54,7 +54,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
                 <div className="w-8 h-8 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center mr-3">
                   <span className="text-white font-bold text-sm">BF</span>
                 </div>
-                <span className="text-xl font-bold text-gray-900 hidden sm:block">
+                <span className="text-xl font-bold text-gray-900 dark:text-gray-100 hidden sm:block">
                   BetterFlow
                 </span>
               </div>
@@ -63,12 +63,12 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
             <div className="ml-6 hidden md:block">
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400" />
+                  <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                 </div>
                 <input
                   type="text"
                   placeholder="Search..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-[#9152DE] focus:border-[#9152DE] sm:text-sm"
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-[#9152DE] focus:border-[#9152DE] sm:text-sm"
                 />
               </div>
             </div>
@@ -79,7 +79,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
             <div className="relative">
               <button
                 onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-                className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+                className="relative p-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
               >
                 <Bell className="h-6 w-6" />
                 {unreadCount > 0 && (
@@ -88,24 +88,24 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
               </button>
 
               {isNotificationOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200">
-                  <div className="p-4 border-b border-gray-200">
-                    <h3 className="text-sm font-semibold text-gray-900">Notifications</h3>
+                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-[#263244] rounded-lg shadow-lg border border-gray-200 dark:border-[#374151]">
+                  <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Notifications</h3>
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {notifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={`p-4 hover:bg-gray-50 border-b border-gray-100 last:border-0 ${
-                          notification.unread ? 'bg-blue-50/50' : ''
+                        className={`p-4 hover:bg-gray-50 dark:hover:bg-gray-800 border-b border-gray-100 dark:border-gray-800 last:border-0 ${
+                          notification.unread ? 'bg-blue-50/50 dark:bg-blue-900/20' : ''
                         }`}
                       >
-                        <p className="text-sm text-gray-900">{notification.text}</p>
-                        <p className="text-xs text-gray-500 mt-1">{notification.time}</p>
+                        <p className="text-sm text-gray-900 dark:text-gray-100">{notification.text}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{notification.time}</p>
                       </div>
                     ))}
                   </div>
-                  <div className="p-3 border-t border-gray-200">
+                  <div className="p-3 border-t border-gray-200 dark:border-gray-700">
                     <Link
                       href="/notifications"
                       className="text-sm text-[#9152DE] hover:text-[#5F29A1] font-medium"
@@ -120,7 +120,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
             <div className="relative">
               <button
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100"
+                className="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <div className="w-8 h-8 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full flex items-center justify-center">
                   <span className="text-white font-medium text-sm">
@@ -128,33 +128,33 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
                   </span>
                 </div>
                 <div className="hidden md:block text-left">
-                  <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                  <p className="text-xs text-gray-500 capitalize">{user?.role}</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{user?.name}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">{user?.role}</p>
                 </div>
-                <ChevronDown className="h-4 w-4 text-gray-500" />
+                <ChevronDown className="h-4 w-4 text-gray-500 dark:text-gray-400" />
               </button>
 
               {isProfileMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200">
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#263244] rounded-lg shadow-lg border border-gray-200 dark:border-[#374151]">
                   <div className="p-2">
                     <Link
                       href="/profile"
-                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
                     >
                       <User className="h-4 w-4" />
                       <span>Profile</span>
                     </Link>
                     <Link
                       href="/settings"
-                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md"
+                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
                     >
                       <Settings className="h-4 w-4" />
                       <span>Settings</span>
                     </Link>
-                    <hr className="my-2 border-gray-200" />
+                    <hr className="my-2 border-gray-200 dark:border-gray-700" />
                     <button
                       onClick={logout}
-                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md w-full text-left"
+                      className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md w-full text-left"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Sign Out</span>

@@ -237,8 +237,8 @@ export default function AutomationsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Automations & AI</h1>
-          <p className="text-gray-500 mt-1">Create and manage automated workflows with AI assistance</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Automations & AI</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Create and manage automated workflows with AI assistance</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -331,9 +331,9 @@ export default function AutomationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Active Automations</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Active Automations</p>
                 <p className="text-2xl font-bold">{activeAutomations}</p>
-                <p className="text-xs text-gray-600 mt-1">of {automations.length} total</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">of {automations.length} total</p>
               </div>
               <Activity className="h-8 w-8 text-green-500" />
             </div>
@@ -343,9 +343,9 @@ export default function AutomationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Runs</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Runs</p>
                 <p className="text-2xl font-bold">{totalRuns.toLocaleString()}</p>
-                <p className="text-xs text-gray-600 mt-1">All time</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">All time</p>
               </div>
               <RefreshCw className="h-8 w-8 text-blue-500" />
             </div>
@@ -355,9 +355,9 @@ export default function AutomationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Success Rate</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Success Rate</p>
                 <p className="text-2xl font-bold">{avgSuccessRate.toFixed(1)}%</p>
-                <p className="text-xs text-gray-600 mt-1">Average</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Average</p>
               </div>
               <Gauge className="h-8 w-8 text-[#9152DE]" />
             </div>
@@ -367,9 +367,9 @@ export default function AutomationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">AI-Powered</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">AI-Powered</p>
                 <p className="text-2xl font-bold">{aiAutomations}</p>
-                <p className="text-xs text-gray-600 mt-1">Automations</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Automations</p>
               </div>
               <Brain className="h-8 w-8 text-orange-500" />
             </div>
@@ -443,7 +443,7 @@ export default function AutomationsPage() {
                             </Badge>
                           )}
                         </h3>
-                        <p className="text-sm text-gray-500">{automation.description}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{automation.description}</p>
                       </div>
                     </div>
 
@@ -454,11 +454,11 @@ export default function AutomationsPage() {
                         {automation.status === 'error' && <XCircle className="h-3 w-3 mr-1" />}
                         {automation.status}
                       </Badge>
-                      <div className="flex items-center gap-1 text-sm text-gray-600">
+                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         {getCategoryIcon(automation.category)}
                         <span className="capitalize">{automation.category}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-sm text-gray-600">
+                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                         <Timer className="h-4 w-4" />
                         <span>{automation.trigger}</span>
                       </div>
@@ -466,21 +466,21 @@ export default function AutomationsPage() {
 
                     <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t">
                       <div>
-                        <p className="text-xs text-gray-500">Last Run</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Last Run</p>
                         <p className="text-sm font-medium">{automation.lastRun}</p>
                       </div>
                       {automation.nextRun && (
                         <div>
-                          <p className="text-xs text-gray-500">Next Run</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-400">Next Run</p>
                           <p className="text-sm font-medium">{automation.nextRun}</p>
                         </div>
                       )}
                       <div>
-                        <p className="text-xs text-gray-500">Total Runs</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Total Runs</p>
                         <p className="text-sm font-medium">{automation.runsCount}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500">Success Rate</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Success Rate</p>
                         <div className="flex items-center gap-2">
                           <Progress value={automation.successRate} className="w-16 h-2" />
                           <span className="text-sm font-medium">{automation.successRate}%</span>
@@ -490,7 +490,7 @@ export default function AutomationsPage() {
 
                     <div className="flex flex-wrap gap-2 mt-4">
                       {automation.actions.map((action, index) => (
-                        <div key={index} className="flex items-center gap-1 text-xs bg-gray-100 px-2 py-1 rounded">
+                        <div key={index} className="flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
                           {index > 0 && <ArrowRight className="h-3 w-3 text-gray-400" />}
                           <span>{action}</span>
                         </div>
@@ -541,7 +541,7 @@ export default function AutomationsPage() {
                       Enable
                     </Button>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     AI detected 23 recurring tasks that could be automatically assigned
                   </p>
                 </div>
@@ -552,7 +552,7 @@ export default function AutomationsPage() {
                       Enable
                     </Button>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Reduce meeting conflicts by 40% with AI scheduling
                   </p>
                 </div>
@@ -563,7 +563,7 @@ export default function AutomationsPage() {
                       Enable
                     </Button>
                   </div>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
                     Forecast resource needs 2 weeks in advance
                   </p>
                 </div>
@@ -602,7 +602,7 @@ export default function AutomationsPage() {
                 </div>
                 <div className="pt-4 border-t">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">AI Learning Progress</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-400">AI Learning Progress</span>
                     <Badge className="bg-green-100 text-green-800">
                       <TrendingUp className="h-3 w-3 mr-1" />
                       Improving
@@ -669,7 +669,7 @@ export default function AutomationsPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-gray-600 mb-4">{template.description}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{template.description}</p>
                   <Button className="w-full" variant="outline">
                     Use Template
                   </Button>

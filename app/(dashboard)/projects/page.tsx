@@ -193,8 +193,8 @@ export default function ProjectsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Projects</h1>
-          <p className="text-gray-500 mt-1">Manage and track all your projects</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Projects</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage and track all your projects</p>
         </div>
         <Button className="bg-[#9152DE] hover:bg-[#5F29A1]">
           <Plus className="h-4 w-4 mr-2" />
@@ -208,7 +208,7 @@ export default function ProjectsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Projects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Projects</p>
                 <p className="text-2xl font-bold">{projects.length}</p>
               </div>
               <FolderOpen className="h-8 w-8 text-[#9152DE]" />
@@ -219,7 +219,7 @@ export default function ProjectsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Active Projects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Active Projects</p>
                 <p className="text-2xl font-bold">{activeProjects}</p>
               </div>
               <TrendingUp className="h-8 w-8 text-green-500" />
@@ -230,7 +230,7 @@ export default function ProjectsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Budget</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Budget</p>
                 <p className="text-2xl font-bold">${(totalBudget / 1000).toFixed(0)}k</p>
               </div>
               <DollarSign className="h-8 w-8 text-blue-500" />
@@ -241,7 +241,7 @@ export default function ProjectsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Budget Spent</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Budget Spent</p>
                 <p className="text-2xl font-bold">{((totalSpent / totalBudget) * 100).toFixed(0)}%</p>
               </div>
               <Target className="h-8 w-8 text-orange-500" />
@@ -342,7 +342,7 @@ export default function ProjectsPage() {
               <CardContent className="space-y-4">
                 <div>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-500">Progress</span>
+                    <span className="text-gray-500 dark:text-gray-400">Progress</span>
                     <span className="font-medium">{project.progress}%</span>
                   </div>
                   <Progress value={project.progress} className="h-2" />
@@ -351,13 +351,13 @@ export default function ProjectsPage() {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4 text-gray-400" />
-                    <span className="text-gray-600">
+                    <span className="text-gray-600 dark:text-gray-400">
                       {new Date(project.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <DollarSign className="h-4 w-4 text-gray-400" />
-                    <span className="text-gray-600">
+                    <span className="text-gray-600 dark:text-gray-400">
                       ${(project.spent / 1000).toFixed(0)}k / ${(project.budget / 1000).toFixed(0)}k
                     </span>
                   </div>
@@ -378,7 +378,7 @@ export default function ProjectsPage() {
                       </div>
                     )}
                   </div>
-                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
                     <Briefcase className="h-4 w-4" />
                     <span>{project.tasks.completed}/{project.tasks.total} tasks</span>
                   </div>
@@ -394,38 +394,38 @@ export default function ProjectsPage() {
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-gray-50 dark:bg-gray-900 border-b">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Project
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Progress
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Team
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Budget
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Deadline
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                   {filteredProjects.map((project) => (
-                    <tr key={project.id} className="hover:bg-gray-50">
+                    <tr key={project.id} className="hover:bg-gray-50 dark:bg-gray-900">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{project.name}</div>
-                          <div className="text-sm text-gray-500">{project.client}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{project.name}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{project.client}</div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -436,7 +436,7 @@ export default function ProjectsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
                           <Progress value={project.progress} className="h-2 w-20" />
-                          <span className="text-sm text-gray-600">{project.progress}%</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{project.progress}%</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -449,16 +449,16 @@ export default function ProjectsPage() {
                             </Avatar>
                           ))}
                           {project.team.length > 3 && (
-                            <span className="text-xs text-gray-500 ml-2">
+                            <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
                               +{project.team.length - 3}
                             </span>
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                         ${(project.spent / 1000).toFixed(0)}k / ${(project.budget / 1000).toFixed(0)}k
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                         {new Date(project.endDate).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -503,12 +503,12 @@ export default function ProjectsPage() {
                           {project.priority}
                         </Badge>
                       </div>
-                      <div className="text-sm text-gray-500">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
                         {startDate.toLocaleDateString()} - {endDate.toLocaleDateString()}
                       </div>
                     </div>
                     <div className="relative">
-                      <div className="h-8 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-8 bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden">
                         <div
                           className="h-full bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full relative"
                           style={{ width: `${project.progress}%` }}
@@ -525,7 +525,7 @@ export default function ProjectsPage() {
                       />
                     </div>
                     <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                      <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <div className="flex items-center gap-1">
                           <Users className="h-4 w-4" />
                           {project.team.length} members

@@ -72,7 +72,7 @@ export default function QuickStatsWidget() {
       );
     } else {
       return (
-        <div className="flex items-center text-gray-500 text-xs">
+        <div className="flex items-center text-gray-500 dark:text-gray-400 text-xs">
           <Minus className="h-3 w-3" />
           <span>0%</span>
         </div>
@@ -81,21 +81,21 @@ export default function QuickStatsWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Stats</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Stats</h2>
 
       <div className="space-y-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+            <div key={index} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-gray-100 dark:bg-gray-800 transition-colors">
               <div className="flex items-center gap-3">
                 <div className={`p-2 bg-white rounded-lg ${stat.color}`}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-600">{stat.label}</p>
-                  <p className="text-xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
+                  <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</p>
                 </div>
               </div>
               {getTrendIcon(stat.trend, stat.change)}
@@ -106,7 +106,7 @@ export default function QuickStatsWidget() {
 
       <div className="mt-6 p-4 bg-gradient-to-r from-[#9152DE]/10 to-[#5F29A1]/10 rounded-lg">
         <h3 className="text-sm font-semibold text-[#9152DE] mb-2">AI Insight</h3>
-        <p className="text-xs text-gray-700">
+        <p className="text-xs text-gray-700 dark:text-gray-300">
           Your productivity is 5% higher than last week. Keep up the great work!
           Consider taking a short break to maintain this performance.
         </p>

@@ -48,27 +48,27 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
-        <div className="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-8 sm:p-10">
+        <div className="bg-white dark:bg-gray-800/95 backdrop-blur-sm shadow-2xl rounded-2xl p-8 sm:p-10">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full mb-4">
               <span className="text-white font-bold text-2xl">BF</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
-            <p className="mt-2 text-sm text-gray-600">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Welcome Back</h2>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
               Sign in to access your BetterFlow dashboard
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email Address
               </label>
               <input
                 {...register('email')}
                 type="email"
                 autoComplete="email"
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
                 placeholder="Enter your email"
               />
               {errors.email && (
@@ -77,7 +77,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Password
               </label>
               <div className="mt-1 relative">
@@ -85,7 +85,7 @@ export default function LoginPage() {
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   autoComplete="current-password"
-                  className="block w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+                  className="block w-full px-3 py-2 pr-10 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
                   placeholder="Enter your password"
                 />
                 <button
@@ -110,9 +110,9 @@ export default function LoginPage() {
                 <input
                   {...register('rememberMe')}
                   type="checkbox"
-                  className="h-4 w-4 text-[#9152DE] focus:ring-[#9152DE] border-gray-300 rounded"
+                  className="h-4 w-4 text-[#9152DE] focus:ring-[#9152DE] border-gray-300 dark:border-gray-600 rounded"
                 />
-                <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700">
+                <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                   Remember me
                 </label>
               </div>
@@ -150,14 +150,14 @@ export default function LoginPage() {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Test Credentials</span>
+                <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">Test Credentials</span>
               </div>
             </div>
 
-            <div className="mt-4 space-y-2 text-xs text-gray-600">
+            <div className="mt-4 space-y-2 text-xs text-gray-600 dark:text-gray-400">
               <div className="flex justify-between">
                 <span>Super Admin:</span>
                 <span className="font-mono">tudor@betterqa.com / SuperAdmin123!</span>

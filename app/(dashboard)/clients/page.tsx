@@ -271,8 +271,8 @@ export default function ClientsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Clients Management</h1>
-          <p className="text-gray-500 mt-1">Manage client relationships and projects</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Clients Management</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage client relationships and projects</p>
         </div>
         <Dialog open={isAddClientOpen} onOpenChange={setIsAddClientOpen}>
           <DialogTrigger asChild>
@@ -354,7 +354,7 @@ export default function ClientsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Clients</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Clients</p>
                 <p className="text-2xl font-bold">{clients.length}</p>
               </div>
               <Building2 className="h-8 w-8 text-[#9152DE]" />
@@ -365,7 +365,7 @@ export default function ClientsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Active Clients</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Active Clients</p>
                 <p className="text-2xl font-bold">{activeClients}</p>
               </div>
               <TrendingUp className="h-8 w-8 text-green-500" />
@@ -376,7 +376,7 @@ export default function ClientsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Revenue</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Revenue</p>
                 <p className="text-2xl font-bold">${(totalRevenue / 1000000).toFixed(1)}M</p>
               </div>
               <DollarSign className="h-8 w-8 text-blue-500" />
@@ -387,7 +387,7 @@ export default function ClientsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Projects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Projects</p>
                 <p className="text-2xl font-bold">{totalProjects}</p>
               </div>
               <FolderOpen className="h-8 w-8 text-orange-500" />
@@ -498,19 +498,19 @@ export default function ClientsPage() {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-gray-500">Revenue</p>
+                    <p className="text-gray-500 dark:text-gray-400">Revenue</p>
                     <p className="font-semibold">${(client.totalRevenue / 1000).toFixed(0)}k</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Projects</p>
+                    <p className="text-gray-500 dark:text-gray-400">Projects</p>
                     <p className="font-semibold">{client.activeProjects + client.completedProjects}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Active</p>
+                    <p className="text-gray-500 dark:text-gray-400">Active</p>
                     <p className="font-semibold">{client.activeProjects}</p>
                   </div>
                   <div>
-                    <p className="text-gray-500">Satisfaction</p>
+                    <p className="text-gray-500 dark:text-gray-400">Satisfaction</p>
                     <div className="flex items-center gap-1">
                       <Star className="h-4 w-4 text-yellow-500 fill-current" />
                       <span className="font-semibold">{client.satisfaction}%</span>
@@ -519,15 +519,15 @@ export default function ClientsPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <p className="text-sm text-gray-500">Primary Contact</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Primary Contact</p>
                   {client.contacts.filter(c => c.isPrimary).map(contact => (
                     <div key={contact.id} className="space-y-1">
                       <p className="text-sm font-medium">{contact.name}</p>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                         <Mail className="h-3 w-3" />
                         {contact.email}
                       </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                         <Phone className="h-3 w-3" />
                         {contact.phone}
                       </div>
@@ -536,7 +536,7 @@ export default function ClientsPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-3 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                     <Calendar className="h-4 w-4" />
                     Since {new Date(client.joinDate).getFullYear()}
                   </div>
@@ -553,37 +553,37 @@ export default function ClientsPage() {
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b">
+                <thead className="bg-gray-50 dark:bg-gray-900 border-b">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Client
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Status
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Tier
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Revenue
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Projects
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Primary Contact
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Satisfaction
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                   {filteredClients.map((client) => (
-                    <tr key={client.id} className="hover:bg-gray-50">
+                    <tr key={client.id} className="hover:bg-gray-50 dark:bg-gray-900">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-3">
                           <Avatar className="h-10 w-10">
@@ -592,8 +592,8 @@ export default function ClientsPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <div className="text-sm font-medium text-gray-900">{client.name}</div>
-                            <div className="text-sm text-gray-500">{client.industry}</div>
+                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{client.name}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">{client.industry}</div>
                           </div>
                         </div>
                       </td>
@@ -607,10 +607,10 @@ export default function ClientsPage() {
                           {client.tier}
                         </Badge>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                         ${(client.totalRevenue / 1000).toFixed(0)}k
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                         <div className="flex items-center gap-2">
                           <span>{client.activeProjects} active</span>
                           <span className="text-gray-400">/</span>
@@ -620,15 +620,15 @@ export default function ClientsPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {client.contacts.filter(c => c.isPrimary).map(contact => (
                           <div key={contact.id}>
-                            <div className="text-sm text-gray-900">{contact.name}</div>
-                            <div className="text-sm text-gray-500">{contact.email}</div>
+                            <div className="text-sm text-gray-900 dark:text-gray-100">{contact.name}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">{contact.email}</div>
                           </div>
                         ))}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                          <span className="text-sm text-gray-600">{client.satisfaction}%</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400">{client.satisfaction}%</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">

@@ -117,8 +117,8 @@ export default function SettingsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-500 mt-1">Manage your account and application preferences</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage your account and application preferences</p>
         </div>
         <Button
           className="bg-[#9152DE] hover:bg-[#5F29A1]"
@@ -170,7 +170,7 @@ export default function SettingsPage() {
                     <Camera className="h-4 w-4 mr-2" />
                     Change Photo
                   </Button>
-                  <p className="text-xs text-gray-500">JPG, GIF or PNG. Max size 2MB</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">JPG, GIF or PNG. Max size 2MB</p>
                 </div>
               </div>
 
@@ -406,7 +406,7 @@ export default function SettingsPage() {
                 <div key={notification.id} className="flex items-center justify-between py-4 border-b last:border-0">
                   <div className="space-y-1">
                     <p className="font-medium">{notification.label}</p>
-                    <p className="text-sm text-gray-500">{notification.description}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{notification.description}</p>
                   </div>
                   <div className="flex gap-4">
                     <Button
@@ -508,7 +508,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-1">
                   <p className="font-medium">Status</p>
-                  <p className="text-sm text-gray-500">Two-factor authentication is currently disabled</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Two-factor authentication is currently disabled</p>
                 </div>
                 <Button variant="outline">Enable 2FA</Button>
               </div>
@@ -524,20 +524,20 @@ export default function SettingsPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between py-2">
                   <div className="flex items-center gap-3">
-                    <Monitor className="h-5 w-5 text-gray-500" />
+                    <Monitor className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     <div>
                       <p className="font-medium">Windows PC - Chrome</p>
-                      <p className="text-sm text-gray-500">Current session</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Current session</p>
                     </div>
                   </div>
                   <Badge className="bg-green-100 text-green-800">Active</Badge>
                 </div>
                 <div className="flex items-center justify-between py-2">
                   <div className="flex items-center gap-3">
-                    <Smartphone className="h-5 w-5 text-gray-500" />
+                    <Smartphone className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     <div>
                       <p className="font-medium">iPhone - Safari</p>
-                      <p className="text-sm text-gray-500">Last active 2 hours ago</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Last active 2 hours ago</p>
                     </div>
                   </div>
                   <Button variant="outline" size="sm">Revoke</Button>
@@ -561,7 +561,7 @@ export default function SettingsPage() {
                     <Github className="h-8 w-8" />
                     <div>
                       <p className="font-medium">GitHub</p>
-                      <p className="text-sm text-gray-500">Source code management</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Source code management</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -574,7 +574,7 @@ export default function SettingsPage() {
                     <Slack className="h-8 w-8" />
                     <div>
                       <p className="font-medium">Slack</p>
-                      <p className="text-sm text-gray-500">Team communication</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Team communication</p>
                     </div>
                   </div>
                   <Button variant="outline">Connect</Button>
@@ -584,7 +584,7 @@ export default function SettingsPage() {
                     <Database className="h-8 w-8 text-blue-500" />
                     <div>
                       <p className="font-medium">Jira</p>
-                      <p className="text-sm text-gray-500">Issue tracking</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">Issue tracking</p>
                     </div>
                   </div>
                   <Button variant="outline">Connect</Button>
@@ -603,14 +603,14 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">API Key</p>
-                    <p className="text-sm text-gray-500">Use this key to authenticate API requests</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Use this key to authenticate API requests</p>
                   </div>
                   <Button variant="outline">Generate Key</Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">Webhooks</p>
-                    <p className="text-sm text-gray-500">Configure webhook endpoints</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Configure webhook endpoints</p>
                   </div>
                   <Button variant="outline">
                     <Zap className="h-4 w-4 mr-2" />
@@ -634,7 +634,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">Export Data</p>
-                    <p className="text-sm text-gray-500">Download all your data in JSON format</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Download all your data in JSON format</p>
                   </div>
                   <Button variant="outline">
                     <FileText className="h-4 w-4 mr-2" />
@@ -644,7 +644,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">Delete Account</p>
-                    <p className="text-sm text-gray-500">Permanently delete your account and all data</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Permanently delete your account and all data</p>
                   </div>
                   <Button variant="outline" className="text-red-600 hover:text-red-700">
                     Delete Account
@@ -664,14 +664,14 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <p className="font-medium">AI Assistant</p>
-                    <p className="text-sm text-gray-500">Get AI-powered suggestions and automation</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Get AI-powered suggestions and automation</p>
                   </div>
                   <Button variant="outline" size="sm">Enable</Button>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <p className="font-medium">Advanced Analytics</p>
-                    <p className="text-sm text-gray-500">Access detailed analytics and insights</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Access detailed analytics and insights</p>
                   </div>
                   <Button variant="outline" size="sm">Enable</Button>
                 </div>

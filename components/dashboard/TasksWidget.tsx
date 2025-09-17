@@ -63,21 +63,21 @@ export default function TasksWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Today's Tasks</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Today's Tasks</h2>
         <button
           onClick={() => setShowAddTask(!showAddTask)}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className="p-2 hover:bg-gray-100 dark:bg-gray-800 rounded-lg transition-colors"
         >
-          <Plus className="h-5 w-5 text-gray-600" />
+          <Plus className="h-5 w-5 text-gray-600 dark:text-gray-400" />
         </button>
       </div>
 
       <div className="mb-4">
         <div className="flex items-center justify-between text-sm mb-2">
-          <span className="text-gray-600">Progress</span>
-          <span className="font-medium text-gray-900">{completedCount} of {tasks.length}</span>
+          <span className="text-gray-600 dark:text-gray-400">Progress</span>
+          <span className="font-medium text-gray-900 dark:text-gray-100">{completedCount} of {tasks.length}</span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div
@@ -95,7 +95,7 @@ export default function TasksWidget() {
             onChange={(e) => setNewTask(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && addTask()}
             placeholder="Add a new task..."
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+            className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
             autoFocus
           />
           <button
@@ -111,7 +111,7 @@ export default function TasksWidget() {
         {tasks.map((task) => (
           <div
             key={task.id}
-            className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg group transition-colors"
+            className="flex items-center gap-3 p-3 hover:bg-gray-50 dark:bg-gray-900 rounded-lg group transition-colors"
           >
             <button
               onClick={() => toggleTask(task.id)}
@@ -131,7 +131,7 @@ export default function TasksWidget() {
                 {task.text}
               </p>
               {task.dueTime && (
-                <p className="text-xs text-gray-500 flex items-center gap-1 mt-1">
+                <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1 mt-1">
                   <Clock className="h-3 w-3" />
                   {task.dueTime}
                 </p>
@@ -148,7 +148,7 @@ export default function TasksWidget() {
         ))}
 
         {tasks.length === 0 && (
-          <div className="text-center py-8 text-gray-500">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             <CheckCircle2 className="h-12 w-12 mx-auto mb-2 text-gray-300" />
             <p>No tasks for today</p>
           </div>

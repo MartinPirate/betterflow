@@ -23,10 +23,10 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
           Welcome back, {user?.name?.split(' ')[0]}!
         </h1>
-        <p className="mt-1 text-sm text-gray-600">
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
           Here's what's happening in your workspace today
         </p>
       </div>
@@ -37,13 +37,13 @@ export default function DashboardPage() {
           return (
             <div
               key={index}
-              className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
             >
               <div className="flex items-center justify-between mb-4">
                 <Icon className={`h-8 w-8 ${stat.color}`} />
-                <span className="text-2xl font-bold text-gray-900">{stat.value}</span>
+                <span className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stat.value}</span>
               </div>
-              <p className="text-sm text-gray-600">{stat.label}</p>
+              <p className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</p>
             </div>
           );
         })}

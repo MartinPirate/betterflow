@@ -226,8 +226,8 @@ export default function UsersPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Users Management</h1>
-          <p className="text-gray-500 mt-1">Manage user accounts and permissions</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Users Management</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage user accounts and permissions</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline">
@@ -299,7 +299,7 @@ export default function UsersPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Users</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Users</p>
                 <p className="text-2xl font-bold">{users.length}</p>
               </div>
               <UsersIcon className="h-8 w-8 text-[#9152DE]" />
@@ -310,7 +310,7 @@ export default function UsersPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Active Users</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Active Users</p>
                 <p className="text-2xl font-bold">{activeUsers}</p>
               </div>
               <UserCheck className="h-8 w-8 text-green-500" />
@@ -321,7 +321,7 @@ export default function UsersPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Pending Approval</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Pending Approval</p>
                 <p className="text-2xl font-bold">{pendingUsers}</p>
               </div>
               <Shield className="h-8 w-8 text-yellow-500" />
@@ -332,7 +332,7 @@ export default function UsersPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Departments</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Departments</p>
                 <p className="text-2xl font-bold">{departments.length}</p>
               </div>
               <MapPin className="h-8 w-8 text-blue-500" />
@@ -398,7 +398,7 @@ export default function UsersPage() {
           <CardContent className="p-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">
+                <span className="text-sm text-gray-600 dark:text-gray-400">
                   {selectedUsers.length} user(s) selected
                 </span>
               </div>
@@ -426,46 +426,46 @@ export default function UsersPage() {
         <CardContent className="p-0">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-gray-50 border-b">
+              <thead className="bg-gray-50 dark:bg-gray-900 border-b">
                 <tr>
                   <th className="px-6 py-3 text-left">
                     <input
                       type="checkbox"
-                      className="rounded border-gray-300"
+                      className="rounded border-gray-300 dark:border-gray-600"
                       checked={selectedUsers.length === paginatedUsers.length && paginatedUsers.length > 0}
                       onChange={toggleAllUsers}
                     />
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     User
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Role
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Department
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Join Date
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Last Active
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                 {paginatedUsers.map((user) => (
-                  <tr key={user.id} className="hover:bg-gray-50">
+                  <tr key={user.id} className="hover:bg-gray-50 dark:bg-gray-900">
                     <td className="px-6 py-4">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300"
+                        className="rounded border-gray-300 dark:border-gray-600"
                         checked={selectedUsers.includes(user.id)}
                         onChange={() => toggleUserSelection(user.id)}
                       />
@@ -478,8 +478,8 @@ export default function UsersPage() {
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{user.name}</div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.name}</div>
+                          <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
                         </div>
                       </div>
                     </td>
@@ -490,8 +490,8 @@ export default function UsersPage() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="text-sm text-gray-900">{user.department}</div>
-                        <div className="text-xs text-gray-500">{user.position}</div>
+                        <div className="text-sm text-gray-900 dark:text-gray-100">{user.department}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">{user.position}</div>
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -499,10 +499,10 @@ export default function UsersPage() {
                         {user.status}
                       </Badge>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                       {new Date(user.joinDate).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-400">
                       {user.lastActive}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -523,7 +523,7 @@ export default function UsersPage() {
 
           {/* Pagination */}
           <div className="px-6 py-4 border-t flex items-center justify-between">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-400">
               Showing {((currentPage - 1) * itemsPerPage) + 1} to{' '}
               {Math.min(currentPage * itemsPerPage, filteredUsers.length)} of{' '}
               {filteredUsers.length} users
@@ -545,7 +545,7 @@ export default function UsersPage() {
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <span className="text-sm text-gray-600 px-3">
+              <span className="text-sm text-gray-600 dark:text-gray-400 px-3">
                 Page {currentPage} of {totalPages}
               </span>
               <Button

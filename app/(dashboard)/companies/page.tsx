@@ -224,8 +224,8 @@ export default function CompaniesPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Companies Management</h1>
-          <p className="text-gray-500 mt-1">Manage all tenant companies and their subscriptions</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Companies Management</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Manage all tenant companies and their subscriptions</p>
         </div>
         <Dialog open={isAddCompanyOpen} onOpenChange={setIsAddCompanyOpen}>
           <DialogTrigger asChild>
@@ -305,7 +305,7 @@ export default function CompaniesPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Companies</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Companies</p>
                 <p className="text-2xl font-bold">{companies.length}</p>
                 <p className="text-xs text-green-600 mt-1">
                   <ArrowUp className="inline h-3 w-3" />
@@ -320,9 +320,9 @@ export default function CompaniesPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total Users</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Total Users</p>
                 <p className="text-2xl font-bold">{totalUsers}</p>
-                <p className="text-xs text-gray-600 mt-1">
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                   Across all companies
                 </p>
               </div>
@@ -334,7 +334,7 @@ export default function CompaniesPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Monthly Revenue</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Monthly Revenue</p>
                 <p className="text-2xl font-bold">${(totalRevenue / 1000).toFixed(1)}K</p>
                 <p className="text-xs text-green-600 mt-1">
                   <ArrowUp className="inline h-3 w-3" />
@@ -349,9 +349,9 @@ export default function CompaniesPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Active Projects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Active Projects</p>
                 <p className="text-2xl font-bold">{totalProjects}</p>
-                <p className="text-xs text-gray-600 mt-1">
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">
                   In progress
                 </p>
               </div>
@@ -412,40 +412,40 @@ export default function CompaniesPage() {
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full">
-                  <thead className="bg-gray-50 border-b">
+                  <thead className="bg-gray-50 dark:bg-gray-900 border-b">
                     <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Company
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Users
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Projects
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Plan
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Revenue
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Growth
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Storage
                       </th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Actions
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
+                  <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                     {filteredCompanies.map((company) => (
-                      <tr key={company.id} className="hover:bg-gray-50">
+                      <tr key={company.id} className="hover:bg-gray-50 dark:bg-gray-900">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
                             <Avatar className="h-10 w-10">
@@ -454,8 +454,8 @@ export default function CompaniesPage() {
                               </AvatarFallback>
                             </Avatar>
                             <div>
-                              <p className="text-sm font-medium text-gray-900">{company.name}</p>
-                              <p className="text-xs text-gray-500">{company.domain}</p>
+                              <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{company.name}</p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400">{company.domain}</p>
                             </div>
                           </div>
                         </td>
@@ -495,7 +495,7 @@ export default function CompaniesPage() {
                               value={(company.storage.used / company.storage.total) * 100}
                               className="w-16 h-2"
                             />
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                               {company.storage.used}GB
                             </span>
                           </div>
@@ -559,19 +559,19 @@ export default function CompaniesPage() {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="text-gray-500">Users</p>
+                      <p className="text-gray-500 dark:text-gray-400">Users</p>
                       <p className="font-semibold">{company.users}</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Projects</p>
+                      <p className="text-gray-500 dark:text-gray-400">Projects</p>
                       <p className="font-semibold">{company.projects}</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Revenue</p>
+                      <p className="text-gray-500 dark:text-gray-400">Revenue</p>
                       <p className="font-semibold">${(company.revenue / 1000).toFixed(0)}k</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Growth</p>
+                      <p className="text-gray-500 dark:text-gray-400">Growth</p>
                       <p className={`font-semibold ${company.growth > 0 ? 'text-green-600' : 'text-red-600'}`}>
                         {company.growth > 0 ? '+' : ''}{company.growth}%
                       </p>
@@ -580,7 +580,7 @@ export default function CompaniesPage() {
 
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Storage Usage</span>
+                      <span className="text-gray-500 dark:text-gray-400">Storage Usage</span>
                       <span className="font-medium">
                         {company.storage.used}GB / {company.storage.total}GB
                       </span>
@@ -589,15 +589,15 @@ export default function CompaniesPage() {
                   </div>
 
                   <div className="space-y-2 text-sm">
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Mail className="h-4 w-4" />
                       {company.email}
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <Phone className="h-4 w-4" />
                       {company.phone}
                     </div>
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                       <MapPin className="h-4 w-4" />
                       {company.location}
                     </div>
@@ -637,13 +637,13 @@ export default function CompaniesPage() {
                       </Avatar>
                       <div>
                         <p className="font-medium">{company.name}</p>
-                        <p className="text-sm text-gray-500">{company.plan} Plan</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{company.plan} Plan</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-6">
                       <div className="text-right">
                         <p className="font-medium">${(company.revenue / 1000).toFixed(1)}k</p>
-                        <p className="text-xs text-gray-500">Monthly</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">Monthly</p>
                       </div>
                       <Badge className="bg-green-100 text-green-800">
                         <CheckCircle className="h-3 w-3 mr-1" />
@@ -672,17 +672,17 @@ export default function CompaniesPage() {
                 {filteredCompanies.map((company) => (
                   <div key={company.id} className="flex items-center gap-4 pb-4 border-b last:border-0">
                     <Avatar className="h-8 w-8">
-                      <AvatarFallback className="bg-gray-100 text-gray-600 text-xs">
+                      <AvatarFallback className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-xs">
                         {company.logo}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
                       <p className="text-sm">
                         <span className="font-medium">{company.name}</span>
-                        <span className="text-gray-500"> last active </span>
-                        <span className="text-gray-900">{company.lastActivity}</span>
+                        <span className="text-gray-500 dark:text-gray-400"> last active </span>
+                        <span className="text-gray-900 dark:text-gray-100">{company.lastActivity}</span>
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {company.users} users • {company.projects} active projects
                       </p>
                     </div>

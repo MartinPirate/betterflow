@@ -272,7 +272,7 @@ export default function NotificationsPage() {
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-3xl font-bold tracking-tight">Notifications</h2>
-          <p className="text-gray-500">
+          <p className="text-gray-500 dark:text-gray-400">
             Stay updated with important activities and announcements
           </p>
         </div>
@@ -300,7 +300,7 @@ export default function NotificationsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{unreadCount}</div>
-            <p className="text-xs text-gray-500 mt-1">New notifications</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">New notifications</p>
           </CardContent>
         </Card>
         <Card>
@@ -312,7 +312,7 @@ export default function NotificationsPage() {
             <div className="text-2xl font-bold">
               {notificationList.filter(n => n.actionRequired).length}
             </div>
-            <p className="text-xs text-gray-500 mt-1">Pending actions</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Pending actions</p>
           </CardContent>
         </Card>
         <Card>
@@ -322,7 +322,7 @@ export default function NotificationsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{starredCount}</div>
-            <p className="text-xs text-gray-500 mt-1">Important items</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Important items</p>
           </CardContent>
         </Card>
         <Card>
@@ -332,7 +332,7 @@ export default function NotificationsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{notificationList.length}</div>
-            <p className="text-xs text-gray-500 mt-1">Total received</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Total received</p>
           </CardContent>
         </Card>
       </div>
@@ -388,8 +388,8 @@ export default function NotificationsPage() {
                                 <span className="ml-2 h-2 w-2 rounded-full bg-purple-600" />
                               )}
                             </h4>
-                            <p className="text-sm text-gray-600">{notification.message}</p>
-                            <div className="flex items-center space-x-4 text-xs text-gray-500">
+                            <p className="text-sm text-gray-600 dark:text-gray-400">{notification.message}</p>
+                            <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
                               <span className="flex items-center">
                                 <Clock className="h-3 w-3 mr-1" />
                                 {notification.timestamp}
@@ -527,19 +527,19 @@ export default function NotificationsPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Today</span>
+                  <span className="text-gray-600 dark:text-gray-400">Today</span>
                   <span className="font-medium">12 notifications</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">This Week</span>
+                  <span className="text-gray-600 dark:text-gray-400">This Week</span>
                   <span className="font-medium">47 notifications</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Response Rate</span>
+                  <span className="text-gray-600 dark:text-gray-400">Response Rate</span>
                   <span className="font-medium text-green-600">92%</span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-gray-600">Avg Response Time</span>
+                  <span className="text-gray-600 dark:text-gray-400">Avg Response Time</span>
                   <span className="font-medium">2.5 hours</span>
                 </div>
               </CardContent>

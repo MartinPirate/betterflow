@@ -80,8 +80,8 @@ export default function ReportsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Reports & Analytics</h1>
-          <p className="text-gray-500 mt-1">Track performance and analyze business metrics</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Reports & Analytics</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Track performance and analyze business metrics</p>
         </div>
         <div className="flex gap-3">
           <Button variant="outline">
@@ -138,7 +138,7 @@ export default function ReportsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Total Revenue</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Revenue</p>
                 <p className="text-2xl font-bold">$2.05M</p>
                 <div className="flex items-center mt-2 text-green-600">
                   <ArrowUp className="h-4 w-4 mr-1" />
@@ -155,7 +155,7 @@ export default function ReportsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Active Projects</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Active Projects</p>
                 <p className="text-2xl font-bold">28</p>
                 <div className="flex items-center mt-2 text-blue-600">
                   <ArrowUp className="h-4 w-4 mr-1" />
@@ -172,7 +172,7 @@ export default function ReportsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Total Hours</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Hours</p>
                 <p className="text-2xl font-bold">3,130</p>
                 <div className="flex items-center mt-2 text-orange-600">
                   <ArrowDown className="h-4 w-4 mr-1" />
@@ -189,7 +189,7 @@ export default function ReportsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500 mb-1">Client Satisfaction</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Client Satisfaction</p>
                 <p className="text-2xl font-bold">94%</p>
                 <div className="flex items-center mt-2 text-purple-600">
                   <ArrowUp className="h-4 w-4 mr-1" />
@@ -224,7 +224,7 @@ export default function ReportsPage() {
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-sm font-medium">{month.label}</span>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
                         ${(month.value / 1000).toFixed(0)}k
                       </span>
                       {month.change && (
@@ -237,7 +237,7 @@ export default function ReportsPage() {
                       )}
                     </div>
                   </div>
-                  <div className="w-full bg-gray-100 rounded-full h-2">
+                  <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
                     <div
                       className="h-full bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full"
                       style={{ width: `${(month.value / maxRevenue) * 100}%` }}
@@ -271,7 +271,7 @@ export default function ReportsPage() {
                       <span className="text-sm font-medium">{status.label}</span>
                     </div>
                     <div className="flex items-center gap-4">
-                      <span className="text-sm text-gray-600">{status.value} projects</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{status.value} projects</span>
                       <Badge variant="outline">{status.percentage}%</Badge>
                     </div>
                   </div>
@@ -314,7 +314,7 @@ export default function ReportsPage() {
                           {dept.percentage}% of total
                         </Badge>
                       </div>
-                      <span className="text-sm text-gray-600">{dept.value} hours</span>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">{dept.value} hours</span>
                     </div>
                     <Progress value={dept.percentage} className="h-2" />
                   </div>
@@ -348,13 +348,13 @@ export default function ReportsPage() {
                           <span className="font-medium">{client.label}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-400">
                             ${(client.value / 1000).toFixed(0)}k
                           </span>
                           <Badge variant="outline">{client.percentage}%</Badge>
                         </div>
                       </div>
-                      <div className="w-full bg-gray-100 rounded-full h-2">
+                      <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
                         <div
                           className={`h-full bg-gradient-to-r ${colors[index]} rounded-full`}
                           style={{ width: `${client.percentage}%` }}
@@ -442,25 +442,25 @@ export default function ReportsPage() {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-medium">E-Commerce Platform</h4>
-                      <p className="text-sm text-gray-500">NewbridgeFX</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">NewbridgeFX</p>
                     </div>
                     <Badge className="bg-green-100 text-green-800">On Track</Badge>
                   </div>
                   <div className="grid grid-cols-4 gap-4 text-sm">
                     <div>
-                      <p className="text-gray-500">Progress</p>
+                      <p className="text-gray-500 dark:text-gray-400">Progress</p>
                       <p className="font-medium">65%</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Budget Used</p>
+                      <p className="text-gray-500 dark:text-gray-400">Budget Used</p>
                       <p className="font-medium">$78.5k / $125k</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Hours</p>
+                      <p className="text-gray-500 dark:text-gray-400">Hours</p>
                       <p className="font-medium">520 / 800</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Deadline</p>
+                      <p className="text-gray-500 dark:text-gray-400">Deadline</p>
                       <p className="font-medium">Jun 30, 2024</p>
                     </div>
                   </div>
@@ -469,25 +469,25 @@ export default function ReportsPage() {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <h4 className="font-medium">Mobile Banking App</h4>
-                      <p className="text-sm text-gray-500">FinanceFirst</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">FinanceFirst</p>
                     </div>
                     <Badge className="bg-yellow-100 text-yellow-800">At Risk</Badge>
                   </div>
                   <div className="grid grid-cols-4 gap-4 text-sm">
                     <div>
-                      <p className="text-gray-500">Progress</p>
+                      <p className="text-gray-500 dark:text-gray-400">Progress</p>
                       <p className="font-medium">45%</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Budget Used</p>
+                      <p className="text-gray-500 dark:text-gray-400">Budget Used</p>
                       <p className="font-medium">$89k / $200k</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Hours</p>
+                      <p className="text-gray-500 dark:text-gray-400">Hours</p>
                       <p className="font-medium">680 / 1500</p>
                     </div>
                     <div>
-                      <p className="text-gray-500">Deadline</p>
+                      <p className="text-gray-500 dark:text-gray-400">Deadline</p>
                       <p className="font-medium">Aug 15, 2024</p>
                     </div>
                   </div>

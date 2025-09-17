@@ -235,8 +235,8 @@ export default function IntegrationsPage() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Integrations</h1>
-          <p className="text-gray-500 mt-1">Connect and manage third-party services</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Integrations</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">Connect and manage third-party services</p>
         </div>
         <Button
           onClick={() => setIsAddOpen(true)}
@@ -261,7 +261,7 @@ export default function IntegrationsPage() {
                   <Card key={index} className="hover:shadow-lg transition-shadow cursor-pointer">
                     <CardContent className="p-4">
                       <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="p-3 bg-gray-100 rounded-lg">
+                        <div className="p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
                           {integration.icon}
                         </div>
                         <h4 className="font-medium">{integration.name}</h4>
@@ -287,9 +287,9 @@ export default function IntegrationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Connected</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Connected</p>
                 <p className="text-2xl font-bold">{connectedCount}</p>
-                <p className="text-xs text-gray-600 mt-1">of {integrations.length} total</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">of {integrations.length} total</p>
               </div>
               <Link2 className="h-8 w-8 text-green-500" />
             </div>
@@ -299,9 +299,9 @@ export default function IntegrationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">API Calls</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">API Calls</p>
                 <p className="text-2xl font-bold">{(totalApiCalls / 1000).toFixed(1)}k</p>
-                <p className="text-xs text-gray-600 mt-1">This month</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">This month</p>
               </div>
               <Activity className="h-8 w-8 text-blue-500" />
             </div>
@@ -311,9 +311,9 @@ export default function IntegrationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Data Synced</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Data Synced</p>
                 <p className="text-2xl font-bold">{(totalDataPoints / 1000).toFixed(1)}k</p>
-                <p className="text-xs text-gray-600 mt-1">Records</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Records</p>
               </div>
               <Database className="h-8 w-8 text-[#9152DE]" />
             </div>
@@ -323,9 +323,9 @@ export default function IntegrationsPage() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Categories</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400">Categories</p>
                 <p className="text-2xl font-bold">8</p>
-                <p className="text-xs text-gray-600 mt-1">Types</p>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mt-1">Types</p>
               </div>
               <Package className="h-8 w-8 text-orange-500" />
             </div>
@@ -390,7 +390,7 @@ export default function IntegrationsPage() {
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-gray-100 rounded-lg">
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         {integration.icon}
                       </div>
                       <div>
@@ -415,7 +415,7 @@ export default function IntegrationsPage() {
                       {integration.status}
                     </Badge>
                     {integration.lastSync && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
                         <RefreshCw className="h-3 w-3 inline mr-1" />
                         {integration.lastSync}
                       </span>
@@ -425,7 +425,7 @@ export default function IntegrationsPage() {
                   {integration.apiCalls && (
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">API Usage</span>
+                        <span className="text-gray-600 dark:text-gray-400">API Usage</span>
                         <span className="font-medium">
                           {integration.apiCalls.used.toLocaleString()} / {integration.apiCalls.limit.toLocaleString()}
                         </span>
@@ -485,18 +485,18 @@ export default function IntegrationsPage() {
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
-                      <div className="p-2 bg-gray-100 rounded-lg">
+                      <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
                         {integration.icon}
                       </div>
                       <div>
                         <h3 className="font-medium">{integration.name}</h3>
-                        <p className="text-sm text-gray-500">{integration.description}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{integration.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       {integration.dataPoints && (
                         <div className="text-right">
-                          <p className="text-sm text-gray-500">Data Points</p>
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Data Points</p>
                           <p className="font-medium">{integration.dataPoints.toLocaleString()}</p>
                         </div>
                       )}
@@ -540,16 +540,16 @@ export default function IntegrationsPage() {
                     <Badge className="bg-green-100 text-green-800">Active</Badge>
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                       <Globe className="h-4 w-4" />
-                      <code className="bg-gray-100 px-2 py-1 rounded text-xs">
+                      <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs">
                         https://api.betterflow.eu/webhooks/github/push
                       </code>
                       <Button variant="ghost" size="sm">
                         <Copy className="h-3 w-3" />
                       </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                       <span>Last triggered: 2 hours ago</span>
                       <span>Total calls: 1,234</span>
                     </div>
@@ -564,16 +564,16 @@ export default function IntegrationsPage() {
                     <Badge className="bg-green-100 text-green-800">Active</Badge>
                   </div>
                   <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                       <Globe className="h-4 w-4" />
-                      <code className="bg-gray-100 px-2 py-1 rounded text-xs">
+                      <code className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-xs">
                         https://api.betterflow.eu/webhooks/stripe/payment
                       </code>
                       <Button variant="ghost" size="sm">
                         <Copy className="h-3 w-3" />
                       </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                       <span>Last triggered: 5 hours ago</span>
                       <span>Total calls: 456</span>
                     </div>
@@ -610,7 +610,7 @@ export default function IntegrationsPage() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <code className="bg-gray-100 px-3 py-1 rounded text-sm font-mono">
+                      <code className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded text-sm font-mono">
                         sk_live_****************************7a9b
                       </code>
                       <Button variant="ghost" size="sm">
@@ -620,7 +620,7 @@ export default function IntegrationsPage() {
                         <Copy className="h-4 w-4" />
                       </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                       <span>Created: Jan 15, 2024</span>
                       <span>Last used: 10 minutes ago</span>
                       <span>Total requests: 45,678</span>
@@ -630,14 +630,14 @@ export default function IntegrationsPage() {
                 <div className="p-4 border rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
-                      <Key className="h-5 w-5 text-gray-500" />
+                      <Key className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                       <h4 className="font-medium">Development API Key</h4>
                     </div>
                     <Badge className="bg-yellow-100 text-yellow-800">Test Mode</Badge>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
-                      <code className="bg-gray-100 px-3 py-1 rounded text-sm font-mono">
+                      <code className="bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded text-sm font-mono">
                         sk_test_****************************3c4d
                       </code>
                       <Button variant="ghost" size="sm">
@@ -647,7 +647,7 @@ export default function IntegrationsPage() {
                         <Copy className="h-4 w-4" />
                       </Button>
                     </div>
-                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
                       <span>Created: Dec 10, 2023</span>
                       <span>Last used: 2 days ago</span>
                       <span>Total requests: 12,345</span>

@@ -37,25 +37,25 @@ export default function CalendarWidget() {
   const renderHeader = () => {
     return (
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
           <Calendar className="h-5 w-5 text-[#9152DE]" />
           Calendar
         </h2>
         <div className="flex items-center gap-2">
           <button
             onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            className="p-1 hover:bg-gray-100 rounded transition-colors"
+            className="p-1 hover:bg-gray-100 dark:bg-gray-800 rounded transition-colors"
           >
-            <ChevronLeft className="h-4 w-4 text-gray-600" />
+            <ChevronLeft className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </button>
-          <span className="text-sm font-medium text-gray-900 min-w-[120px] text-center">
+          <span className="text-sm font-medium text-gray-900 dark:text-gray-100 min-w-[120px] text-center">
             {format(currentMonth, 'MMMM yyyy')}
           </span>
           <button
             onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            className="p-1 hover:bg-gray-100 rounded transition-colors"
+            className="p-1 hover:bg-gray-100 dark:bg-gray-800 rounded transition-colors"
           >
-            <ChevronRight className="h-4 w-4 text-gray-600" />
+            <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </button>
         </div>
       </div>
@@ -68,7 +68,7 @@ export default function CalendarWidget() {
       <div className="grid grid-cols-7 gap-1 mb-2">
         {days.map((day) => (
           <div key={day} className="text-center">
-            <span className="text-xs font-medium text-gray-500">{day}</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day}</span>
           </div>
         ))}
       </div>
@@ -142,14 +142,14 @@ export default function CalendarWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
       {renderHeader()}
       {renderDays()}
       {renderCells()}
 
       {todayEvents.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <h3 className="text-sm font-medium text-gray-900 mb-2">
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
             Events on {format(selectedDate, 'MMM d')}
           </h3>
           <div className="space-y-2">

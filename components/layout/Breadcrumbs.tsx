@@ -47,14 +47,14 @@ export default function Breadcrumbs() {
               <ChevronRight className="h-4 w-4 text-gray-400 mx-2" />
             )}
             {isLast ? (
-              <span className="text-gray-900 font-medium flex items-center gap-1">
+              <span className="text-gray-900 dark:text-gray-100 font-medium flex items-center gap-1">
                 {Icon && <Icon className="h-4 w-4" />}
                 {crumb.name}
               </span>
             ) : (
               <Link
                 href={crumb.href}
-                className="text-gray-500 hover:text-[#9152DE] transition-colors flex items-center gap-1"
+                className="text-gray-500 dark:text-gray-400 hover:text-[#9152DE] transition-colors flex items-center gap-1"
               >
                 {Icon && <Icon className="h-4 w-4" />}
                 {crumb.name}

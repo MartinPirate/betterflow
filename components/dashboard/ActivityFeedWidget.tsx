@@ -114,27 +114,27 @@ export default function ActivityFeedWidget() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Recent Activity</h2>
 
       <div className="space-y-4 max-h-96 overflow-y-auto">
         {activities.map((activity) => (
           <div key={activity.id} className="flex gap-3 group">
             <div className="flex-shrink-0 mt-0.5">
-              <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-gray-100 transition-colors">
+              <div className="p-2 bg-gray-50 dark:bg-gray-900 rounded-lg group-hover:bg-gray-100 dark:bg-gray-800 transition-colors">
                 {getActivityIcon(activity.type)}
               </div>
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm text-gray-900">
+              <p className="text-sm text-gray-900 dark:text-gray-100">
                 <span className="font-medium">{activity.user}</span>{' '}
-                <span className="text-gray-600">{activity.action}</span>{' '}
+                <span className="text-gray-600 dark:text-gray-400">{activity.action}</span>{' '}
                 {activity.target && (
                   <span className="font-medium text-[#9152DE]">{activity.target}</span>
                 )}
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 {formatDistanceToNow(activity.time, { addSuffix: true })}
               </p>
             </div>
@@ -142,7 +142,7 @@ export default function ActivityFeedWidget() {
         ))}
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-200">
+      <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
         <button className="text-sm text-[#9152DE] hover:text-[#5F29A1] font-medium">
           View all activity →
         </button>

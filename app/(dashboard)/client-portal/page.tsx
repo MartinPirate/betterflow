@@ -215,9 +215,9 @@ export default function ClientPortalPage() {
       case 'review':
         return 'bg-yellow-500/10 text-yellow-500';
       case 'upcoming':
-        return 'bg-gray-500/10 text-gray-500';
+        return 'bg-gray-500/10 text-gray-500 dark:text-gray-400';
       default:
-        return 'bg-gray-500/10 text-gray-500';
+        return 'bg-gray-500/10 text-gray-500 dark:text-gray-400';
     }
   };
 
@@ -233,10 +233,10 @@ export default function ClientPortalPage() {
             <div>
               <h1 className="text-3xl font-bold">{clientInfo.name}</h1>
               <div className="flex items-center gap-3 mt-1">
-                <Badge className="bg-purple-500/10 text-purple-500">
+                <Badge className="bg-purple-500/10 text-purple-500 dark:bg-purple-400/10 dark:text-purple-400">
                   {clientInfo.tier} Client
                 </Badge>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm text-gray-500 dark:text-gray-400">
                   Contract Value: ${clientInfo.contractValue.toLocaleString()}
                 </span>
               </div>
@@ -260,7 +260,7 @@ export default function ClientPortalPage() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Active Projects</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Active Projects</p>
                   <p className="text-2xl font-bold">{clientInfo.activeProjects}</p>
                 </div>
                 <Activity className="h-8 w-8 text-purple-500" />
@@ -271,7 +271,7 @@ export default function ClientPortalPage() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">On-Time Delivery</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">On-Time Delivery</p>
                   <p className="text-2xl font-bold">94%</p>
                 </div>
                 <TrendingUp className="h-8 w-8 text-green-500" />
@@ -282,7 +282,7 @@ export default function ClientPortalPage() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Budget Utilization</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Budget Utilization</p>
                   <p className="text-2xl font-bold">72%</p>
                 </div>
                 <DollarSign className="h-8 w-8 text-blue-500" />
@@ -293,7 +293,7 @@ export default function ClientPortalPage() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Satisfaction Score</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Satisfaction Score</p>
                   <div className="flex items-center gap-1 mt-1">
                     <p className="text-2xl font-bold">4.8</p>
                     <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
@@ -348,18 +348,18 @@ export default function ClientPortalPage() {
                     {/* Budget */}
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <p className="text-sm text-gray-500">Budget</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Budget</p>
                         <p className="font-semibold">${project.budget.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Spent</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Spent</p>
                         <p className="font-semibold">${project.spent.toLocaleString()}</p>
                       </div>
                     </div>
 
                     {/* Team */}
                     <div>
-                      <p className="text-sm text-gray-500 mb-2">Team Members</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Team Members</p>
                       <div className="flex -space-x-2">
                         {project.team.slice(0, 4).map((member, idx) => (
                           <Avatar key={idx} className="border-2 border-white">
@@ -378,7 +378,7 @@ export default function ClientPortalPage() {
                     {/* Next Deliverable */}
                     <div className="flex items-center justify-between pt-4 border-t">
                       <div>
-                        <p className="text-sm text-gray-500">Next Deliverable</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">Next Deliverable</p>
                         <p className="font-medium">{project.nextDeliverable}</p>
                       </div>
                       <Badge variant="outline">
@@ -416,12 +416,12 @@ export default function ClientPortalPage() {
                           {update.type === 'milestone' ? <CheckCircle className="h-4 w-4 text-green-600" /> :
                            update.type === 'deliverable' ? <Package className="h-4 w-4 text-blue-600" /> :
                            update.type === 'meeting' ? <Calendar className="h-4 w-4 text-purple-600" /> :
-                           <AlertCircle className="h-4 w-4 text-gray-600" />}
+                           <AlertCircle className="h-4 w-4 text-gray-600 dark:text-gray-400" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium truncate">{update.project}</p>
-                          <p className="text-sm text-gray-600">{update.message}</p>
-                          <p className="text-xs text-gray-400 mt-1">
+                          <p className="text-sm text-gray-600 dark:text-gray-300">{update.message}</p>
+                          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                             {update.user} • {update.timestamp}
                           </p>
                         </div>
@@ -438,7 +438,7 @@ export default function ClientPortalPage() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-500">Account Manager</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Account Manager</p>
                     <p className="font-medium">{clientInfo.accountManager}</p>
                     <Button variant="link" className="px-0 h-auto" size="sm">
                       <Mail className="h-3 w-3 mr-1" />
@@ -446,9 +446,9 @@ export default function ClientPortalPage() {
                     </Button>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Primary Contact</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Primary Contact</p>
                     <p className="font-medium">{clientInfo.primaryContact}</p>
-                    <p className="text-sm text-gray-600">{clientInfo.email}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{clientInfo.email}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -528,7 +528,7 @@ export default function ClientPortalPage() {
                           'bg-gray-300'
                         }`} />
                         <span className="text-sm flex-1">{milestone.name}</span>
-                        <span className="text-sm text-gray-500">{milestone.date}</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">{milestone.date}</span>
                         <Badge variant="outline" className={getStatusColor(milestone.status)}>
                           {milestone.status.replace('_', ' ')}
                         </Badge>
@@ -559,17 +559,17 @@ export default function ClientPortalPage() {
             <CardContent>
               <div className="space-y-3">
                 {invoices.map((invoice) => (
-                  <div key={invoice.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                  <div key={invoice.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 dark:border-gray-700">
                     <div className="flex items-center gap-4">
-                      <FileText className="h-8 w-8 text-gray-400" />
+                      <FileText className="h-8 w-8 text-gray-400 dark:text-gray-600" />
                       <div>
                         <p className="font-medium">{invoice.id}</p>
-                        <p className="text-sm text-gray-500">{invoice.project}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{invoice.project}</p>
                       </div>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">${invoice.amount.toLocaleString()}</p>
-                      <p className="text-sm text-gray-500">{invoice.date}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{invoice.date}</p>
                     </div>
                     <Badge className={
                       invoice.status === 'paid' ? 'bg-green-500/10 text-green-500' :
@@ -605,19 +605,19 @@ export default function ClientPortalPage() {
             <CardContent>
               <div className="space-y-3">
                 {deliverables.map((deliverable, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                  <div key={idx} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 dark:border-gray-700">
                     <div className="flex items-center gap-4">
-                      <div className="h-10 w-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <div className="h-10 w-10 bg-purple-100 dark:bg-purple-900/30 rounded-lg flex items-center justify-center">
                         <FileText className="h-5 w-5 text-purple-600" />
                       </div>
                       <div>
                         <p className="font-medium">{deliverable.name}</p>
-                        <p className="text-sm text-gray-500">{deliverable.project}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{deliverable.project}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="text-right">
-                        <p className="text-sm text-gray-500">{deliverable.date}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">{deliverable.date}</p>
                         <p className="text-sm text-gray-400">{deliverable.size}</p>
                       </div>
                       <Button variant="ghost" size="sm">
