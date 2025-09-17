@@ -3,8 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
-import ClockWidget from '@/components/dashboard/ClockWidget';
-import TasksWidget from '@/components/dashboard/TasksWidget';
+import TimeTrackingWidget from '@/components/dashboard/TimeTrackingWidget';
 import CalendarWidget from '@/components/dashboard/CalendarWidget';
 import TeamStatusWidget from '@/components/dashboard/TeamStatusWidget';
 import ActivityFeedWidget from '@/components/dashboard/ActivityFeedWidget';
@@ -64,21 +63,19 @@ export default function DashboardPage() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <ClockWidget />
-            <TasksWidget />
-          </div>
-          <ActivityFeedWidget />
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TimeTrackingWidget />
+        <CalendarWidget />
+      </div>
 
-        <div className="space-y-6">
-          <CalendarWidget />
-          <TeamStatusWidget />
-          <QuickStatsWidget />
-          <AIInsightsWidget />
-        </div>
+      <div className="space-y-6">
+        <ActivityFeedWidget />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <TeamStatusWidget />
+        <QuickStatsWidget />
+        <AIInsightsWidget />
       </div>
     </div>
   );

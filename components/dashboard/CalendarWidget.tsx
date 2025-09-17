@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   format,
   startOfMonth,
@@ -13,62 +13,92 @@ import {
   subMonths,
   isSameMonth,
   isSameDay,
-  isToday
+  isToday,
+  isWeekend
 } from 'date-fns';
 
-interface Event {
+interface CalendarDay {
   date: Date;
-  title: string;
-  type: 'meeting' | 'leave' | 'holiday' | 'deadline';
+  hasEntry: boolean;
+  holiday?: boolean;
+  onLeave?: boolean;
+  noEntry?: boolean;
+  weekend?: boolean;
+  forecast?: boolean;
+  hoursWorked?: number;
+  targetHours?: number;
 }
 
 export default function CalendarWidget() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const events: Event[] = [
-    { date: new Date(), title: 'Team Standup', type: 'meeting' },
-    { date: addDays(new Date(), 2), title: 'Sprint Review', type: 'meeting' },
-    { date: addDays(new Date(), 5), title: 'Project Deadline', type: 'deadline' },
-    { date: addDays(new Date(), 7), title: 'John - Vacation', type: 'leave' },
-    { date: addDays(new Date(), 14), title: 'Company Holiday', type: 'holiday' }
+  // Sample data with hours worked based on the screenshot
+  const calendarData: CalendarDay[] = [
+    { date: new Date(2025, 8, 1), hasEntry: true, hoursWorked: 11.0, targetHours: 10.5 },
+    { date: new Date(2025, 8, 2), hasEntry: true, hoursWorked: 12.0, targetHours: 11.5 },
+    { date: new Date(2025, 8, 3), hasEntry: true, hoursWorked: 9.0, targetHours: 9.8 },
+    { date: new Date(2025, 8, 4), hasEntry: true, hoursWorked: 9.0, targetHours: 9.5 },
+    { date: new Date(2025, 8, 5), hasEntry: true, hoursWorked: 10.0, targetHours: 10.5 },
+    { date: new Date(2025, 8, 6), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 7), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 8), hasEntry: true, hoursWorked: 9.0, targetHours: 9.9 },
+    { date: new Date(2025, 8, 9), hasEntry: true, hoursWorked: 8.0, targetHours: 10.0 },
+    { date: new Date(2025, 8, 10), hasEntry: true, hoursWorked: 7.0, targetHours: 7.8 },
+    { date: new Date(2025, 8, 11), hasEntry: true, hoursWorked: 13.0, targetHours: 13.8 },
+    { date: new Date(2025, 8, 12), hasEntry: true, hoursWorked: 13.0, targetHours: 13.5 },
+    { date: new Date(2025, 8, 13), hasEntry: false, weekend: true, hoursWorked: 3.0, targetHours: 3.0 },
+    { date: new Date(2025, 8, 14), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 15), hasEntry: true, hoursWorked: 18.0, targetHours: 18.0 },
+    { date: new Date(2025, 8, 16), hasEntry: true, hoursWorked: 15.7, targetHours: 15.7 },
+    { date: new Date(2025, 8, 17), hasEntry: true, hoursWorked: 0, targetHours: 8.0 }, // Today - current
+    { date: new Date(2025, 8, 18), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 19), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 20), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 21), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 22), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 23), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 24), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 25), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 26), hasEntry: false, hoursWorked: 0, targetHours: 8.0, noEntry: true }, // 0 hours, not weekend
+    { date: new Date(2025, 8, 27), hasEntry: false, weekend: true },
+    { date: new Date(2025, 8, 28), hasEntry: false, weekend: true }
   ];
+
+  const getDataForDate = (date: Date): CalendarDay | undefined => {
+    return calendarData.find(item => isSameDay(item.date, date));
+  };
 
   const renderHeader = () => {
     return (
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
-          <Calendar className="h-5 w-5 text-[#9152DE]" />
-          Calendar
+      <div className="flex items-center justify-between mb-6">
+        <button
+          onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+          className="p-2 hover:bg-[#9152DE]/10 rounded-lg transition-colors"
+        >
+          <ChevronLeft className="h-5 w-5 text-[#9152DE]" />
+        </button>
+
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          {format(currentMonth, 'MMMM yyyy')}
         </h2>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            className="p-1 hover:bg-gray-100 dark:bg-gray-800 rounded transition-colors"
-          >
-            <ChevronLeft className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-          </button>
-          <span className="text-sm font-medium text-gray-900 dark:text-gray-100 min-w-[120px] text-center">
-            {format(currentMonth, 'MMMM yyyy')}
-          </span>
-          <button
-            onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            className="p-1 hover:bg-gray-100 dark:bg-gray-800 rounded transition-colors"
-          >
-            <ChevronRight className="h-4 w-4 text-gray-600 dark:text-gray-400" />
-          </button>
-        </div>
+
+        <button
+          onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+          className="p-2 hover:bg-[#9152DE]/10 rounded-lg transition-colors"
+        >
+          <ChevronRight className="h-5 w-5 text-[#9152DE]" />
+        </button>
       </div>
     );
   };
 
   const renderDays = () => {
-    const days = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     return (
-      <div className="grid grid-cols-7 gap-1 mb-2">
+      <div className="grid grid-cols-7 gap-1 mb-3">
         {days.map((day) => (
-          <div key={day} className="text-center">
-            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">{day}</span>
+          <div key={day} className="text-center py-2">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{day}</span>
           </div>
         ))}
       </div>
@@ -78,8 +108,8 @@ export default function CalendarWidget() {
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
     const monthEnd = endOfMonth(monthStart);
-    const startDate = startOfWeek(monthStart);
-    const endDate = endOfWeek(monthEnd);
+    const startDate = startOfWeek(monthStart, { weekStartsOn: 1 }); // Start on Monday
+    const endDate = endOfWeek(monthEnd, { weekStartsOn: 1 });
 
     const rows = [];
     let days = [];
@@ -88,58 +118,83 @@ export default function CalendarWidget() {
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
         const cloneDay = day;
-        const hasEvent = events.some(event => isSameDay(event.date, cloneDay));
+        const dayData = getDataForDate(cloneDay);
+        const isCurrentMonth = isSameMonth(day, monthStart);
+        const isTodayDate = isToday(day);
+        const isWeekendDay = isWeekend(day);
+
+        let cellClasses = "relative h-16 w-full flex flex-col items-center justify-center text-sm font-medium cursor-pointer transition-all border border-gray-200 dark:border-gray-600";
+        let bgColor = "";
+        let textColor = "text-gray-700 dark:text-gray-300";
+
+        if (!isCurrentMonth) {
+          textColor = "text-gray-400";
+        } else if (isTodayDate) {
+          // Today gets purple circle background
+          bgColor = "";
+          textColor = "text-gray-900 dark:text-gray-100";
+        } else if (dayData?.noEntry && dayData?.hoursWorked === 0 && !isWeekendDay) {
+          // Days with 0 hours worked (not weekends) get red background
+          bgColor = "bg-red-100 border-red-300";
+          textColor = "text-red-800";
+        } else if (dayData?.holiday) {
+          bgColor = "bg-blue-200 border-blue-300";
+          textColor = "text-blue-800";
+        } else if (dayData?.weekend || isWeekendDay) {
+          bgColor = "bg-blue-100 border-blue-200";
+          textColor = "text-blue-700";
+        } else if (dayData?.onLeave) {
+          bgColor = "bg-gray-400 border-gray-500";
+          textColor = "text-white";
+        } else if (dayData?.forecast) {
+          bgColor = "bg-green-100 border-green-200";
+          textColor = "text-green-700";
+        }
 
         days.push(
           <div
             key={day.toString()}
-            className={`
-              relative p-2 text-center cursor-pointer transition-all
-              ${!isSameMonth(day, monthStart)
-                ? 'text-gray-400'
-                : 'text-gray-900'
-              }
-              ${isSameDay(day, selectedDate)
-                ? 'bg-[#9152DE]/10 text-[#9152DE] font-medium'
-                : ''
-              }
-              ${isToday(day)
-                ? 'bg-[#9152DE] text-white rounded-lg font-medium'
-                : 'hover:bg-gray-100 rounded-lg'
-              }
-            `}
-            onClick={() => setSelectedDate(cloneDay)}
+            className={`${cellClasses} ${bgColor} ${textColor} rounded-lg hover:opacity-80`}
           >
-            <span className="text-sm">{format(day, 'd')}</span>
-            {hasEvent && !isToday(day) && (
-              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-[#9152DE] rounded-full" />
+            {/* Day number */}
+            {isTodayDate ? (
+              <div className="w-6 h-6 bg-[#9152DE] rounded-full flex items-center justify-center">
+                <span className="text-white text-sm font-bold">{format(day, 'd')}</span>
+              </div>
+            ) : (
+              <span className="text-sm font-medium">{format(day, 'd')}</span>
+            )}
+
+            {/* Hours worked display */}
+            {dayData?.hoursWorked !== undefined && dayData.hoursWorked > 0 && isCurrentMonth && (
+              <div className="flex flex-col items-center text-xs mt-1">
+                <span className="bg-[#5F29A1] text-white px-2 py-1 rounded-full text-xs font-medium">
+                  {dayData.hoursWorked}h
+                </span>
+              </div>
+            )}
+
+            {dayData?.holiday && (
+              <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 text-xs text-blue-600">
+                Holiday
+              </div>
             )}
           </div>
         );
         day = addDays(day, 1);
       }
       rows.push(
-        <div className="grid grid-cols-7 gap-1" key={day.toString()}>
+        <div className="grid grid-cols-7 gap-2" key={day.toString()}>
           {days}
         </div>
       );
       days = [];
     }
 
-    return <div className="space-y-1">{rows}</div>;
+    return <div className="space-y-2">{rows}</div>;
   };
 
-  const todayEvents = events.filter(event => isSameDay(event.date, selectedDate));
-
-  const getEventColor = (type: string) => {
-    switch (type) {
-      case 'meeting': return 'bg-blue-100 text-blue-800';
-      case 'leave': return 'bg-yellow-100 text-yellow-800';
-      case 'holiday': return 'bg-green-100 text-green-800';
-      case 'deadline': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
-    }
-  };
+  // Remove the events-related code since we're using a different data structure
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
@@ -147,23 +202,39 @@ export default function CalendarWidget() {
       {renderDays()}
       {renderCells()}
 
-      {todayEvents.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-          <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-            Events on {format(selectedDate, 'MMM d')}
-          </h3>
-          <div className="space-y-2">
-            {todayEvents.map((event, index) => (
-              <div
-                key={index}
-                className={`px-3 py-2 rounded-lg text-xs font-medium ${getEventColor(event.type)}`}
-              >
-                {event.title}
-              </div>
-            ))}
+      {/* Calendar Legend */}
+      <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-[#9152DE] rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">Has Entry</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-red-100 border border-red-300 rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">0 Hours</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-blue-200 rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">Holiday</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-gray-400 rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">On Leave</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-blue-100 rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">Weekend</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-green-100 rounded"></div>
+            <span className="text-gray-700 dark:text-gray-300">Forecast</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-4 h-4 bg-[#9152DE] rounded-full"></div>
+            <span className="text-gray-700 dark:text-gray-300">Today</span>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
