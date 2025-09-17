@@ -1,122 +1,224 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Plus, Clock, CheckCircle, XCircle, AlertCircle, CalendarDays, User, Building, FileText, TrendingUp, Users, X, Download, Filter } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { format, differenceInDays, isWeekend, eachDayOfInterval, parseISO, addDays } from 'date-fns';
-import { cn } from '@/lib/utils';
+import {
+  Calendar, Plus, Clock, CheckCircle, XCircle, Users, AlertCircle,
+  ChevronLeft, ChevronRight, Search, Filter, Download, Eye, Edit, Trash2,
+  ChevronDown, MoreVertical, CalendarDays, UserCheck, UserX
+} from 'lucide-react';
+import { format, addMonths, subMonths, startOfMonth, endOfMonth, eachDayOfInterval,
+         isSameMonth, isToday, parseISO, isWeekend, startOfWeek, endOfWeek, differenceInDays } from 'date-fns';
 
 interface LeaveRequest {
   id: number;
-  type: 'vacation' | 'sick' | 'personal' | 'unpaid';
+  employee: string;
+  avatar?: string;
+  type: 'annual' | 'sick' | 'personal' | 'other';
   startDate: string;
   endDate: string;
   days: number;
-  status: 'pending' | 'approved' | 'rejected' | 'cancelled';
+  status: 'approved' | 'pending' | 'rejected';
   reason: string;
+  department: string;
   requestedOn: string;
   approvedBy?: string;
-  comments?: string;
-  employee?: string;
-  department?: string;
+  manager?: string;
 }
 
 export default function LeavesPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedUser, setSelectedUser] = useState('All Users');
+  const [selectedStatus, setSelectedStatus] = useState('Any Status');
+  const [selectedPeriod, setSelectedPeriod] = useState('All Time');
+  const [showRequestModal, setShowRequestModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const [selectedTab, setSelectedTab] = useState('all');
-  const [leaveType, setLeaveType] = useState('vacation');
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [reason, setReason] = useState('');
+  const itemsPerPage = 10;
 
-  // Sample leave requests data
-  const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([
+  // Extended leave requests data
+  const allLeaveRequests: LeaveRequest[] = [
     {
       id: 1,
-      type: 'vacation',
-      startDate: '2025-10-01',
-      endDate: '2025-10-05',
+      employee: 'Catalina Cump',
+      type: 'annual',
+      startDate: '2025-09-22',
+      endDate: '2025-09-26',
       days: 5,
       status: 'approved',
       reason: 'Family vacation to Europe',
+      department: 'Engineering',
       requestedOn: '2025-09-01',
-      approvedBy: 'Sarah Johnson',
-      employee: 'John Doe',
-      department: 'Engineering'
+      approvedBy: 'John Manager',
+      manager: 'John Manager'
     },
     {
       id: 2,
+      employee: 'Valerian Roca',
       type: 'sick',
-      startDate: '2025-09-20',
-      endDate: '2025-09-21',
+      startDate: '2025-09-19',
+      endDate: '2025-09-20',
       days: 2,
-      status: 'pending',
-      reason: 'Medical appointment and recovery',
+      status: 'approved',
+      reason: 'Medical appointment',
+      department: 'Marketing',
       requestedOn: '2025-09-18',
-      employee: 'Jane Smith',
-      department: 'Marketing'
+      approvedBy: 'Sarah Johnson',
+      manager: 'Sarah Johnson'
     },
     {
       id: 3,
-      type: 'personal',
-      startDate: '2025-11-15',
-      endDate: '2025-11-15',
-      days: 1,
-      status: 'approved',
-      reason: 'Personal matters',
-      requestedOn: '2025-11-01',
-      approvedBy: 'Mike Wilson',
-      employee: 'Bob Johnson',
-      department: 'Sales'
+      employee: 'Claudia Malau',
+      type: 'annual',
+      startDate: '2025-10-01',
+      endDate: '2025-10-10',
+      days: 8,
+      status: 'pending',
+      reason: 'Annual vacation',
+      department: 'Sales',
+      requestedOn: '2025-09-15',
+      manager: 'Mike Wilson'
     },
     {
       id: 4,
-      type: 'vacation',
+      employee: 'John Doe',
+      type: 'personal',
+      startDate: '2025-09-25',
+      endDate: '2025-09-25',
+      days: 1,
+      status: 'approved',
+      reason: 'Personal matters',
+      department: 'Finance',
+      requestedOn: '2025-09-20',
+      approvedBy: 'Alice Brown',
+      manager: 'Alice Brown'
+    },
+    {
+      id: 5,
+      employee: 'Jane Smith',
+      type: 'sick',
+      startDate: '2025-09-18',
+      endDate: '2025-09-18',
+      days: 1,
+      status: 'rejected',
+      reason: 'Flu symptoms',
+      department: 'HR',
+      requestedOn: '2025-09-17',
+      manager: 'Tom Davis'
+    },
+    {
+      id: 6,
+      employee: 'Michael Brown',
+      type: 'annual',
+      startDate: '2025-10-15',
+      endDate: '2025-10-25',
+      days: 9,
+      status: 'pending',
+      reason: 'Trip to Asia',
+      department: 'Engineering',
+      requestedOn: '2025-09-10',
+      manager: 'John Manager'
+    },
+    {
+      id: 7,
+      employee: 'Emily Johnson',
+      type: 'personal',
+      startDate: '2025-09-28',
+      endDate: '2025-09-29',
+      days: 2,
+      status: 'approved',
+      reason: 'Family emergency',
+      department: 'Marketing',
+      requestedOn: '2025-09-25',
+      approvedBy: 'Sarah Johnson',
+      manager: 'Sarah Johnson'
+    },
+    {
+      id: 8,
+      employee: 'David Wilson',
+      type: 'annual',
+      startDate: '2025-11-20',
+      endDate: '2025-11-30',
+      days: 9,
+      status: 'pending',
+      reason: 'Thanksgiving holidays',
+      department: 'Sales',
+      requestedOn: '2025-09-05',
+      manager: 'Mike Wilson'
+    },
+    {
+      id: 9,
+      employee: 'Sophie Martinez',
+      type: 'sick',
+      startDate: '2025-09-17',
+      endDate: '2025-09-17',
+      days: 1,
+      status: 'approved',
+      reason: 'Doctor appointment',
+      department: 'Finance',
+      requestedOn: '2025-09-16',
+      approvedBy: 'Alice Brown',
+      manager: 'Alice Brown'
+    },
+    {
+      id: 10,
+      employee: 'Robert Lee',
+      type: 'annual',
       startDate: '2025-12-20',
       endDate: '2025-12-31',
       days: 8,
       status: 'pending',
-      reason: 'Holiday break with family',
-      requestedOn: '2025-09-15',
-      employee: 'Alice Brown',
-      department: 'HR'
-    },
-    {
-      id: 5,
-      type: 'sick',
-      startDate: '2025-08-15',
-      endDate: '2025-08-16',
-      days: 2,
-      status: 'rejected',
-      reason: 'Flu symptoms',
-      requestedOn: '2025-08-14',
-      comments: 'Please provide medical certificate',
-      employee: 'Tom Davis',
-      department: 'Finance'
+      reason: 'Christmas holidays',
+      department: 'Engineering',
+      requestedOn: '2025-09-01',
+      manager: 'John Manager'
     }
-  ]);
+  ];
 
-  const leaveBalance = {
-    vacation: { total: 21, used: 5, remaining: 16 },
-    sick: { total: 10, used: 2, remaining: 8 },
-    personal: { total: 5, used: 1, remaining: 4 },
-    unpaid: { total: 'Unlimited', used: 0, remaining: 'Unlimited' }
+  // Filter requests based on selected tab
+  const getFilteredRequests = () => {
+    switch (selectedTab) {
+      case 'active':
+        return allLeaveRequests.filter(r => {
+          const today = new Date();
+          const start = parseISO(r.startDate);
+          const end = parseISO(r.endDate);
+          return start <= today && end >= today && r.status === 'approved';
+        });
+      case 'upcoming':
+        return allLeaveRequests.filter(r => {
+          const today = new Date();
+          const start = parseISO(r.startDate);
+          return start > today && r.status === 'approved';
+        });
+      case 'rejected':
+        return allLeaveRequests.filter(r => r.status === 'rejected');
+      default:
+        return allLeaveRequests;
+    }
   };
 
-  const upcomingHolidays = [
-    { date: '2025-10-31', name: 'Halloween' },
-    { date: '2025-11-27', name: 'Thanksgiving' },
-    { date: '2025-12-25', name: 'Christmas Day' },
-    { date: '2025-12-31', name: 'New Year\'s Eve' }
-  ];
+  const filteredRequests = getFilteredRequests();
+  const totalPages = Math.ceil(filteredRequests.length / itemsPerPage);
+  const paginatedRequests = filteredRequests.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  // Calculate stats
+  const activeLeaves = allLeaveRequests.filter(l => {
+    const today = new Date();
+    const start = parseISO(l.startDate);
+    const end = parseISO(l.endDate);
+    return start <= today && end >= today && l.status === 'approved';
+  });
+
+  const upcomingLeaves = allLeaveRequests.filter(l => {
+    const today = new Date();
+    const start = parseISO(l.startDate);
+    return start > today && l.status === 'approved';
+  });
+
+  const rejectedRequests = allLeaveRequests.filter(l => l.status === 'rejected');
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -126,421 +228,362 @@ export default function LeavesPage() {
         return <XCircle className="h-4 w-4 text-red-500" />;
       case 'pending':
         return <Clock className="h-4 w-4 text-yellow-500" />;
-      case 'cancelled':
-        return <XCircle className="h-4 w-4 text-gray-500 dark:text-gray-400" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-gray-500 dark:text-gray-400" />;
+        return <AlertCircle className="h-4 w-4 text-gray-500" />;
     }
   };
 
-  const getStatusBadge = (status: LeaveRequest['status']) => {
-    const variants = {
-      approved: 'success',
-      rejected: 'destructive',
-      pending: 'warning',
-      cancelled: 'secondary'
-    } as const;
-
-    return <Badge variant={variants[status] as any}>{status}</Badge>;
-  };
-
-  const getTypeColor = (type: LeaveRequest['type']) => {
-    const colors = {
-      vacation: 'bg-blue-100 text-blue-800',
-      sick: 'bg-red-100 text-red-800',
-      personal: 'bg-green-100 text-green-800',
-      unpaid: 'bg-gray-100 text-gray-800'
-    };
-    return colors[type];
-  };
-
-  const filteredRequests = leaveRequests.filter(request => {
-    if (selectedTab === 'all') return true;
-    if (selectedTab === 'ongoing') {
-      const today = new Date().toISOString().split('T')[0];
-      return request.startDate <= today && request.endDate >= today && request.status === 'approved';
+  const getTypeColor = (type: string) => {
+    switch (type) {
+      case 'annual': return 'bg-purple-100 text-purple-800';
+      case 'sick': return 'bg-blue-100 text-blue-800';
+      case 'personal': return 'bg-green-100 text-green-800';
+      case 'other': return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
-    if (selectedTab === 'upcoming') {
-      const today = new Date().toISOString().split('T')[0];
-      return request.startDate > today && request.status === 'approved';
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'approved': return 'bg-green-100 text-green-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'rejected': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
-    if (selectedTab === 'rejected') return request.status === 'rejected';
-    return true;
-  });
-
-  const calculateWorkingDays = (start: string, end: string) => {
-    if (!start || !end) return 0;
-
-    const startDate = parseISO(start);
-    const endDate = parseISO(end);
-    const days = eachDayOfInterval({ start: startDate, end: endDate });
-
-    return days.filter(day => !isWeekend(day)).length;
-  };
-
-  const handleSubmitRequest = () => {
-    const workingDays = calculateWorkingDays(startDate, endDate);
-
-    const newRequest: LeaveRequest = {
-      id: leaveRequests.length + 1,
-      type: leaveType as LeaveRequest['type'],
-      startDate,
-      endDate,
-      days: workingDays,
-      status: 'pending',
-      reason,
-      requestedOn: new Date().toISOString().split('T')[0],
-      employee: 'Current User',
-      department: 'Engineering'
-    };
-
-    setLeaveRequests([...leaveRequests, newRequest]);
-    setIsModalOpen(false);
-    setLeaveType('vacation');
-    setStartDate('');
-    setEndDate('');
-    setReason('');
-  };
-
-  const handleCancelRequest = (id: number) => {
-    setLeaveRequests(prev =>
-      prev.map(req =>
-        req.id === id ? { ...req, status: 'cancelled' as const } : req
-      )
-    );
   };
 
   return (
-    <div className="container mx-auto py-6">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">Leave Management</h1>
-          <p className="text-muted-foreground">Track and manage your time off</p>
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
+      {/* Header */}
+      <div className="mb-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Leave Management</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Manage team leaves and requests</p>
+          </div>
+
+          <button
+            onClick={() => setShowRequestModal(true)}
+            className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-xl font-semibold hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-lg hover:shadow-xl"
+          >
+            <Plus className="h-5 w-5" />
+            REQUEST LEAVE
+          </button>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <Download className="mr-2 h-4 w-4" />
-            Export
-          </Button>
-          <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                Request Leave
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[525px]">
-              <DialogHeader>
-                <DialogTitle>Request Time Off</DialogTitle>
-                <DialogDescription>
-                  Submit a new leave request for approval
-                </DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="type" className="text-right">
+
+        {/* Filter Bar */}
+        <div className="flex flex-wrap items-center gap-3 mb-6 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm">
+          <div className="flex-1 min-w-[200px]">
+            <select
+              value={selectedUser}
+              onChange={(e) => setSelectedUser(e.target.value)}
+              className="w-full appearance-none bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+            >
+              <option>All Users</option>
+              <option>Catalina Cump</option>
+              <option>Valerian Roca</option>
+              <option>Claudia Malau</option>
+              <option>John Doe</option>
+              <option>Jane Smith</option>
+            </select>
+          </div>
+
+          <div className="flex-1 min-w-[150px]">
+            <select
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              className="w-full appearance-none bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+            >
+              <option>Any Status</option>
+              <option>Approved</option>
+              <option>Pending</option>
+              <option>Rejected</option>
+            </select>
+          </div>
+
+          <div className="flex-1 min-w-[150px]">
+            <select
+              value={selectedPeriod}
+              onChange={(e) => setSelectedPeriod(e.target.value)}
+              className="w-full appearance-none bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+            >
+              <option>All Time</option>
+              <option>This Month</option>
+              <option>Last Month</option>
+              <option>Next Month</option>
+              <option>This Year</option>
+            </select>
+          </div>
+
+          <button className="px-5 py-2 bg-[#9152DE] text-white rounded-lg font-medium hover:bg-[#5F29A1] transition-all duration-200 flex items-center gap-2">
+            <Search className="h-4 w-4" />
+            Apply
+          </button>
+
+          <button className="px-3 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors">
+            <Filter className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Stats Cards - Now Visible and Clickable */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <button
+            onClick={() => setSelectedTab('all')}
+            className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 border-2 ${
+              selectedTab === 'all' ? 'border-[#9152DE] shadow-[#9152DE]/20' : 'border-gray-200 dark:border-gray-700'
+            } cursor-pointer hover:scale-105 transform`}
+          >
+            <div className="text-center">
+              <p className="text-3xl font-bold text-[#9152DE] mb-2">
+                {allLeaveRequests.length}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">All Leaves</p>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setSelectedTab('active')}
+            className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 border-2 ${
+              selectedTab === 'active' ? 'border-green-500 shadow-green-500/20' : 'border-gray-200 dark:border-gray-700'
+            } cursor-pointer hover:scale-105 transform`}
+          >
+            <div className="text-center">
+              <p className="text-3xl font-bold text-green-600 mb-2">
+                {activeLeaves.length}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">Active Leaves</p>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setSelectedTab('upcoming')}
+            className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 border-2 ${
+              selectedTab === 'upcoming' ? 'border-blue-500 shadow-blue-500/20' : 'border-gray-200 dark:border-gray-700'
+            } cursor-pointer hover:scale-105 transform`}
+          >
+            <div className="text-center">
+              <p className="text-3xl font-bold text-blue-600 mb-2">
+                {upcomingLeaves.length}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">Upcoming Leaves</p>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setSelectedTab('rejected')}
+            className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-200 border-2 ${
+              selectedTab === 'rejected' ? 'border-red-500 shadow-red-500/20' : 'border-gray-200 dark:border-gray-700'
+            } cursor-pointer hover:scale-105 transform`}
+          >
+            <div className="text-center">
+              <p className="text-3xl font-bold text-red-600 mb-2">
+                {rejectedRequests.length}
+              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">Rejected</p>
+            </div>
+          </button>
+        </div>
+
+        {/* Leave Requests Table */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                Leave Requests
+                <span className="ml-2 text-sm font-normal text-gray-600 dark:text-gray-400">
+                  ({filteredRequests.length} total)
+                </span>
+              </h2>
+              <button className="flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <Download className="h-4 w-4" />
+                Export
+              </button>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50 dark:bg-gray-700/50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Employee
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Type
-                  </Label>
-                  <Select value={leaveType} onValueChange={setLeaveType}>
-                    <SelectTrigger className="col-span-3">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="vacation">Vacation</SelectItem>
-                      <SelectItem value="sick">Sick Leave</SelectItem>
-                      <SelectItem value="personal">Personal</SelectItem>
-                      <SelectItem value="unpaid">Unpaid Leave</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="start" className="text-right">
-                    Start Date
-                  </Label>
-                  <Input
-                    id="start"
-                    type="date"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    className="col-span-3"
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="end" className="text-right">
-                    End Date
-                  </Label>
-                  <Input
-                    id="end"
-                    type="date"
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    min={startDate}
-                    className="col-span-3"
-                  />
-                </div>
-                {startDate && endDate && (
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label className="text-right">Days</Label>
-                    <div className="col-span-3">
-                      <Badge variant="secondary">
-                        {calculateWorkingDays(startDate, endDate)} working days
-                      </Badge>
-                    </div>
-                  </div>
-                )}
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="reason" className="text-right">
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Duration
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Days
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Reason
-                  </Label>
-                  <Textarea
-                    id="reason"
-                    value={reason}
-                    onChange={(e) => setReason(e.target.value)}
-                    placeholder="Please provide a reason for your leave request..."
-                    className="col-span-3"
-                  />
-                </div>
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Manager
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                {paginatedRequests.map((request) => (
+                  <tr key={request.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-8 h-8 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full flex items-center justify-center text-white text-sm font-bold mr-3">
+                          {request.employee.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                            {request.employee}
+                          </div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400">
+                            {request.department}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${getTypeColor(request.type)}`}>
+                        {request.type}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                      {format(parseISO(request.startDate), 'MMM d')} - {format(parseISO(request.endDate), 'MMM d, yyyy')}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        {request.days}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center gap-2">
+                        {getStatusIcon(request.status)}
+                        <span className={`px-2.5 py-1 text-xs font-medium rounded-full ${getStatusColor(request.status)}`}>
+                          {request.status}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-sm text-gray-600 dark:text-gray-400 truncate max-w-xs">
+                        {request.reason}
+                      </p>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm text-gray-900 dark:text-gray-100">
+                        {request.manager}
+                      </div>
+                      {request.approvedBy && (
+                        <div className="text-xs text-green-600">
+                          ✓ {request.approvedBy}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-right">
+                      <div className="flex items-center gap-2">
+                        <button className="text-gray-400 hover:text-[#9152DE] transition-colors">
+                          <Eye className="h-4 w-4" />
+                        </button>
+                        {request.status === 'pending' && (
+                          <>
+                            <button className="text-gray-400 hover:text-blue-600 transition-colors">
+                              <Edit className="h-4 w-4" />
+                            </button>
+                            <button className="text-gray-400 hover:text-red-600 transition-colors">
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </>
+                        )}
+                        <button className="text-gray-400 hover:text-gray-600 transition-colors">
+                          <MoreVertical className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                Showing <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> to{' '}
+                <span className="font-medium">
+                  {Math.min(currentPage * itemsPerPage, filteredRequests.length)}
+                </span>{' '}
+                of <span className="font-medium">{filteredRequests.length}</span> results
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                  disabled={currentPage === 1}
+                  className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => (
+                  <button
+                    key={i + 1}
+                    onClick={() => setCurrentPage(i + 1)}
+                    className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+                      currentPage === i + 1
+                        ? 'bg-[#9152DE] text-white'
+                        : 'border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleSubmitRequest} disabled={!startDate || !endDate || !reason}>
-                  Submit Request
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Leave Balance Cards */}
-      <div className="grid gap-4 md:grid-cols-4 mb-6">
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Vacation Days</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{leaveBalance.vacation.remaining}</div>
-            <div className="mt-2">
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-blue-500 h-2 rounded-full"
-                  style={{ width: `${(leaveBalance.vacation.used / leaveBalance.vacation.total) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {leaveBalance.vacation.used} used of {leaveBalance.vacation.total}
-              </p>
+      {/* Request Leave Modal */}
+      {showRequestModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold">Request Leave</h2>
+              <button
+                onClick={() => setShowRequestModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg"
+              >
+                <XCircle className="h-5 w-5" />
+              </button>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Sick Leave</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{leaveBalance.sick.remaining}</div>
-            <div className="mt-2">
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-red-500 h-2 rounded-full"
-                  style={{ width: `${(leaveBalance.sick.used / leaveBalance.sick.total) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {leaveBalance.sick.used} used of {leaveBalance.sick.total}
-              </p>
+            <p className="text-gray-600 mb-4">Leave request form would go here...</p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowRequestModal(false)}
+                className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg"
+              >
+                Cancel
+              </button>
+              <button className="px-4 py-2 bg-[#9152DE] text-white rounded-lg hover:bg-[#5F29A1]">
+                Submit Request
+              </button>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Personal Days</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{leaveBalance.personal.remaining}</div>
-            <div className="mt-2">
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div
-                  className="bg-green-500 h-2 rounded-full"
-                  style={{ width: `${(leaveBalance.personal.used / leaveBalance.personal.total) * 100}%` }}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {leaveBalance.personal.used} used of {leaveBalance.personal.total}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium">Upcoming Holidays</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{upcomingHolidays.length}</div>
-            <p className="text-xs text-muted-foreground mt-1">
-              Next: {upcomingHolidays[0].name}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {format(parseISO(upcomingHolidays[0].date), 'MMM d')}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Leave Requests Tabs */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Leave Requests</CardTitle>
-            <Button variant="outline" size="sm">
-              <Filter className="mr-2 h-4 w-4" />
-              Filter
-            </Button>
           </div>
-        </CardHeader>
-        <CardContent>
-          <Tabs value={selectedTab} onValueChange={setSelectedTab}>
-            <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="all">
-                All ({leaveRequests.length})
-              </TabsTrigger>
-              <TabsTrigger value="ongoing">
-                Ongoing ({leaveRequests.filter(r => {
-                  const today = new Date().toISOString().split('T')[0];
-                  return r.startDate <= today && r.endDate >= today && r.status === 'approved';
-                }).length})
-              </TabsTrigger>
-              <TabsTrigger value="upcoming">
-                Upcoming ({leaveRequests.filter(r => {
-                  const today = new Date().toISOString().split('T')[0];
-                  return r.startDate > today && r.status === 'approved';
-                }).length})
-              </TabsTrigger>
-              <TabsTrigger value="rejected">
-                Rejected ({leaveRequests.filter(r => r.status === 'rejected').length})
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value={selectedTab} className="mt-4">
-              <div className="space-y-4">
-                {filteredRequests.map((request) => (
-                  <div
-                    key={request.id}
-                    className="flex items-start justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex gap-4">
-                      <div className="mt-1">
-                        {getStatusIcon(request.status)}
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold">{request.employee || 'You'}</span>
-                          <Badge className={cn("text-xs", getTypeColor(request.type))}>
-                            {request.type}
-                          </Badge>
-                          {getStatusBadge(request.status)}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          {format(parseISO(request.startDate), 'MMM d, yyyy')} - {format(parseISO(request.endDate), 'MMM d, yyyy')}
-                          <span className="ml-2">({request.days} {request.days === 1 ? 'day' : 'days'})</span>
-                        </div>
-                        <div className="text-sm">{request.reason}</div>
-                        {request.approvedBy && (
-                          <div className="text-xs text-muted-foreground">
-                            Approved by {request.approvedBy}
-                          </div>
-                        )}
-                        {request.comments && (
-                          <div className="text-xs text-muted-foreground italic">
-                            "{request.comments}"
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {request.status === 'pending' && (
-                        <>
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleCancelRequest(request.id)}
-                          >
-                            Cancel
-                          </Button>
-                          <Button variant="outline" size="sm">
-                            Edit
-                          </Button>
-                        </>
-                      )}
-                      {request.status !== 'pending' && (
-                        <Button variant="ghost" size="sm">
-                          View Details
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
-
-                {filteredRequests.length === 0 && (
-                  <div className="text-center py-12">
-                    <Calendar className="mx-auto h-12 w-12 text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">No leave requests found</p>
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
-
-      {/* Team Calendar Preview */}
-      <Card className="mt-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Users className="h-5 w-5" />
-            Team Calendar
-          </CardTitle>
-          <CardDescription>See who's out in your team</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-7 gap-2">
-            {Array.from({ length: 7 }, (_, i) => {
-              const date = addDays(new Date(), i);
-              const dayRequests = leaveRequests.filter(r => {
-                const reqStart = parseISO(r.startDate);
-                const reqEnd = parseISO(r.endDate);
-                return date >= reqStart && date <= reqEnd && r.status === 'approved';
-              });
-
-              return (
-                <div key={i} className={cn(
-                  "p-3 border rounded-lg text-center",
-                  isWeekend(date) && "bg-muted/50"
-                )}>
-                  <div className="text-xs text-muted-foreground">
-                    {format(date, 'EEE')}
-                  </div>
-                  <div className="text-lg font-semibold">
-                    {format(date, 'd')}
-                  </div>
-                  {dayRequests.length > 0 && (
-                    <div className="mt-2">
-                      <Badge variant="secondary" className="text-xs">
-                        {dayRequests.length} out
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      )}
     </div>
   );
 }
