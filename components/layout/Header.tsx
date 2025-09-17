@@ -44,7 +44,7 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false, isColla
           <div className="flex items-center">
             <button
               onClick={onMenuToggle}
-              className="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-[#9152DE] dark:hover:text-[#9152DE] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group"
+              className="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-[#9152DE] dark:hover:text-[#9152DE] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group lg:hidden"
               aria-label="Toggle menu"
             >
               <div className="flex flex-col items-center justify-center w-6 h-6">
@@ -55,8 +55,17 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false, isColla
             </button>
           </div>
 
-          {/* Center Section - Search Bar and AI Button - Positioned to start at 50% */}
-          <div className="absolute left-1/2 flex items-center gap-2">
+          {/* Center Section - AI Button positioned between start and search */}
+          <div className="absolute left-1/4 flex items-center">
+            {/* AI Button - Centered between left edge and search */}
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-full hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
+              <Sparkles className="h-3.5 w-3.5 animate-spin" />
+              <span className="text-xs font-medium hidden sm:inline">Ask BF-AI</span>
+            </button>
+          </div>
+
+          {/* Right Center Section - Search Bar */}
+          <div className="absolute right-1/4 flex items-center">
             {/* Search Input - Reduced width */}
             <div className="relative w-48 lg:w-56">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -69,12 +78,6 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false, isColla
                 aria-label="Search"
               />
             </div>
-
-            {/* AI Button - Smaller size */}
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-full hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
-              <Sparkles className="h-3.5 w-3.5 animate-spin" />
-              <span className="text-xs font-medium hidden sm:inline">Ask BF-AI</span>
-            </button>
           </div>
 
           {/* Right Section - Actions */}
