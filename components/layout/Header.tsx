@@ -37,7 +37,8 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
     <header className="bg-white dark:bg-[#263244] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-40">
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <div className="flex items-center">
+          {/* Left Section - Logo and Menu */}
+          <div className="flex items-center flex-1">
             <button
               onClick={onMenuToggle}
               className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden"
@@ -59,22 +60,24 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
                 </span>
               </div>
             </div>
+          </div>
 
-            <div className="ml-6 hidden md:block">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-[#9152DE] focus:border-[#9152DE] sm:text-sm"
-                />
+          {/* Center Section - Search Bar */}
+          <div className="flex-1 max-w-xl mx-4 hidden md:block">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
               </div>
+              <input
+                type="text"
+                placeholder="Search anything..."
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-[#9152DE] focus:border-[#9152DE] sm:text-sm"
+              />
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
+          {/* Right Section - Actions */}
+          <div className="flex items-center space-x-4 flex-1 justify-end">
             <ThemeToggle />
             <div className="relative">
               <button

@@ -74,6 +74,12 @@
 
 @layer base {
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background;
+    color: hsl(var(--foreground));
+  }
+
+  /* Button text should be white on colored backgrounds */
+  .text-white {
+    color: white !important;
   }
 }
