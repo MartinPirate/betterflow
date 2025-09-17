@@ -7,6 +7,7 @@ import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { KeyboardShortcutsDialog } from '@/components/keyboard-shortcuts-dialog';
+import PageTransition from '@/components/animations/PageTransition';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardLayout({
@@ -55,7 +56,9 @@ export default function DashboardLayout({
         <main className="flex-1 lg:ml-0">
           <div className="p-4 sm:p-6 lg:p-8">
             <Breadcrumbs />
-            {children}
+            <PageTransition>
+              {children}
+            </PageTransition>
           </div>
         </main>
       </div>
