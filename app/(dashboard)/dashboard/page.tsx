@@ -9,6 +9,7 @@ import TeamStatusWidget from '@/components/dashboard/TeamStatusWidget';
 import ActivityFeedWidget from '@/components/dashboard/ActivityFeedWidget';
 import QuickStatsWidget from '@/components/dashboard/QuickStatsWidget';
 import AIInsightsWidget from '@/components/dashboard/AIInsightsWidget';
+import AIUserPerformanceWidget from '@/components/dashboard/AIUserPerformanceWidget';
 import { Clock, CheckCircle, Users, TrendingUp } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -68,14 +69,17 @@ export default function DashboardPage() {
         <CalendarWidget />
       </div>
 
-      <div className="space-y-6">
-        <ActivityFeedWidget />
-      </div>
-
+      {/* Three AI Analysis Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <TeamStatusWidget />
+        <AIUserPerformanceWidget />
         <QuickStatsWidget />
         <AIInsightsWidget />
+      </div>
+
+      {/* Team Status and Activity Feed in 2 columns */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TeamStatusWidget />
+        <ActivityFeedWidget />
       </div>
     </div>
   );
