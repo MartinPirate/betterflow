@@ -46,10 +46,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="bg-white dark:bg-gray-800/95 backdrop-blur-sm shadow-2xl rounded-2xl p-8 sm:p-10">
-          <div className="text-center mb-8">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-md w-full space-y-6">
+        <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl shadow-2xl rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-700">
+          <div className="text-center mb-6">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full mb-4">
               <span className="text-white font-bold text-2xl">BF</span>
             </div>
@@ -59,7 +59,7 @@ export default function LoginPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email Address
@@ -134,7 +134,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#9152DE] to-[#5F29A1] hover:from-[#5F29A1] hover:to-[#204782] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9152DE] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-full shadow-sm text-sm font-medium text-white bg-gradient-to-r from-[#9152DE] to-[#5F29A1] hover:from-[#5F29A1] hover:to-[#204782] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9152DE] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
               {isLoading ? (
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
@@ -147,7 +147,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <div className="mt-6">
+          <div className="mt-5">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
@@ -157,7 +157,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <div className="mt-4 space-y-2 text-xs text-gray-600 dark:text-gray-400">
+            <div className="mt-3 space-y-1 text-xs text-gray-500 dark:text-gray-400">
               <div className="flex justify-between">
                 <span>Super Admin:</span>
                 <span className="font-mono">tudor@betterqa.com / SuperAdmin123!</span>
@@ -178,7 +178,7 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <p className="text-center text-sm text-white/80">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
           &copy; 2025 BetterFlow by BetterQA. All rights reserved.
         </p>
       </div>
