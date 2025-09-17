@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useKeyboardShortcuts } from '@/hooks/use-keyboard-shortcuts';
 import Header from '@/components/layout/Header';
 import Sidebar from '@/components/layout/Sidebar';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
+import { KeyboardShortcutsDialog } from '@/components/keyboard-shortcuts-dialog';
 import { useRouter } from 'next/navigation';
 
 export default function DashboardLayout({
@@ -15,6 +17,9 @@ export default function DashboardLayout({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, isLoading } = useAuth();
   const router = useRouter();
+
+  // Initialize keyboard shortcuts
+  useKeyboardShortcuts();
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -54,6 +59,8 @@ export default function DashboardLayout({
           </div>
         </main>
       </div>
+
+      <KeyboardShortcutsDialog />
     </div>
   );
 }
