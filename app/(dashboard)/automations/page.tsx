@@ -175,6 +175,105 @@ const mockAutomations: Automation[] = [
     aiEnabled: false,
     creator: 'IT Admin',
     createdAt: '2022-12-01'
+  },
+  {
+    id: '7',
+    name: 'Client Onboarding Flow',
+    description: 'Automated client setup and documentation',
+    type: 'workflow',
+    category: 'project',
+    status: 'active',
+    trigger: 'Manual trigger',
+    actions: ['Create accounts', 'Send welcome emails', 'Setup workspace'],
+    lastRun: '4 hours ago',
+    runsCount: 45,
+    successRate: 96,
+    aiEnabled: false,
+    creator: 'Sales Team',
+    createdAt: '2023-05-01'
+  },
+  {
+    id: '8',
+    name: 'Expense Auto-Categorization',
+    description: 'AI categorizes and processes expense reports',
+    type: 'ai-powered',
+    category: 'report',
+    status: 'active',
+    trigger: 'On expense submission',
+    actions: ['Scan receipts', 'Categorize expenses', 'Apply policies', 'Route for approval'],
+    lastRun: '1 hour ago',
+    runsCount: 892,
+    successRate: 94,
+    aiEnabled: true,
+    creator: 'Finance',
+    createdAt: '2023-02-15'
+  },
+  {
+    id: '9',
+    name: 'Meeting Scheduler Bot',
+    description: 'Smart meeting scheduling with conflict detection',
+    type: 'triggered',
+    category: 'notification',
+    status: 'active',
+    trigger: 'Calendar request',
+    actions: ['Check availability', 'Find optimal time', 'Send invites'],
+    lastRun: '30 minutes ago',
+    runsCount: 1234,
+    successRate: 91,
+    aiEnabled: true,
+    creator: 'Admin',
+    createdAt: '2023-03-25'
+  },
+  {
+    id: '10',
+    name: 'Security Audit Automation',
+    description: 'Regular security scans and reports',
+    type: 'scheduled',
+    category: 'data',
+    status: 'active',
+    trigger: 'Weekly on Sunday',
+    actions: ['Scan systems', 'Check vulnerabilities', 'Generate report'],
+    lastRun: '2 days ago',
+    nextRun: '5 days',
+    runsCount: 52,
+    successRate: 100,
+    aiEnabled: false,
+    creator: 'Security Team',
+    createdAt: '2023-01-01'
+  },
+  {
+    id: '11',
+    name: 'Employee Birthday Alerts',
+    description: 'Automated birthday wishes and team notifications',
+    type: 'scheduled',
+    category: 'notification',
+    status: 'active',
+    trigger: 'Daily at 9:00 AM',
+    actions: ['Check birthdays', 'Send wishes', 'Notify team'],
+    lastRun: '3 hours ago',
+    nextRun: '21 hours',
+    runsCount: 365,
+    successRate: 100,
+    aiEnabled: false,
+    creator: 'HR',
+    createdAt: '2022-01-01'
+  },
+  {
+    id: '12',
+    name: 'Contract Renewal Alerts',
+    description: 'Notify before contract expiration',
+    type: 'scheduled',
+    category: 'notification',
+    status: 'active',
+    trigger: '30 days before expiry',
+    actions: ['Check contracts', 'Send notifications', 'Create tasks'],
+    lastRun: '1 day ago',
+    nextRun: '1 day',
+    runsCount: 89,
+    successRate: 100,
+    aiEnabled: false,
+    creator: 'Legal',
+    createdAt: '2023-04-10'
   }
 ];
 
@@ -423,104 +522,170 @@ export default function AutomationsPage() {
           <TabsTrigger value="insights">AI Insights</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="all" className="space-y-4">
-          {filteredAutomations.map((automation) => (
-            <Card key={automation.id} className="hover:shadow-lg transition-shadow">
-              <CardContent className="p-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="p-2 bg-[#9152DE]/10 rounded-lg">
-                        {getTypeIcon(automation.type)}
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg flex items-center gap-2">
-                          {automation.name}
-                          {automation.aiEnabled && (
-                            <Badge className="bg-gradient-to-r from-purple-500 to-pink-500 text-white">
-                              <Sparkles className="h-3 w-3 mr-1" />
-                              AI
-                            </Badge>
-                          )}
-                        </h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400">{automation.description}</p>
-                      </div>
-                    </div>
+        <TabsContent value="all" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {filteredAutomations.map((automation) => (
+              <Card
+                key={automation.id}
+                className="group relative overflow-hidden hover:shadow-xl transition-all duration-300 border-2 border-gray-200 dark:border-gray-700 hover:border-[#9152DE] cursor-pointer"
+              >
+                {/* Status indicator bar */}
+                <div className={`absolute top-0 left-0 right-0 h-1 ${
+                  automation.status === 'active' ? 'bg-gradient-to-r from-green-400 to-green-600' :
+                  automation.status === 'paused' ? 'bg-gradient-to-r from-yellow-400 to-yellow-600' :
+                  automation.status === 'error' ? 'bg-gradient-to-r from-red-400 to-red-600' :
+                  'bg-gradient-to-r from-gray-400 to-gray-600'
+                }`} />
 
-                    <div className="flex items-center gap-4 mt-4">
-                      <Badge className={getStatusColor(automation.status)}>
-                        {automation.status === 'active' && <CheckCircle className="h-3 w-3 mr-1" />}
-                        {automation.status === 'paused' && <Pause className="h-3 w-3 mr-1" />}
-                        {automation.status === 'error' && <XCircle className="h-3 w-3 mr-1" />}
-                        {automation.status}
+                <CardContent className="p-4">
+                  {/* Header with icon and AI badge */}
+                  <div className="flex items-start justify-between mb-3">
+                    <div className={`p-2 rounded-lg ${
+                      automation.type === 'ai-powered' ? 'bg-gradient-to-br from-[#9152DE]/20 to-pink-500/20' :
+                      automation.type === 'scheduled' ? 'bg-blue-500/10' :
+                      automation.type === 'triggered' ? 'bg-orange-500/10' :
+                      'bg-gray-500/10'
+                    }`}>
+                      {getTypeIcon(automation.type)}
+                    </div>
+                    {automation.aiEnabled && (
+                      <Badge className="bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white border-0">
+                        <Sparkles className="h-3 w-3" />
                       </Badge>
-                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-                        {getCategoryIcon(automation.category)}
-                        <span className="capitalize">{automation.category}</span>
-                      </div>
-                      <div className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400">
-                        <Timer className="h-4 w-4" />
-                        <span>{automation.trigger}</span>
-                      </div>
-                    </div>
+                    )}
+                  </div>
 
-                    <div className="grid grid-cols-4 gap-4 mt-4 pt-4 border-t">
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Last Run</p>
-                        <p className="text-sm font-medium">{automation.lastRun}</p>
-                      </div>
-                      {automation.nextRun && (
-                        <div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">Next Run</p>
-                          <p className="text-sm font-medium">{automation.nextRun}</p>
-                        </div>
-                      )}
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Total Runs</p>
-                        <p className="text-sm font-medium">{automation.runsCount}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">Success Rate</p>
-                        <div className="flex items-center gap-2">
-                          <Progress value={automation.successRate} className="w-16 h-2" />
-                          <span className="text-sm font-medium">{automation.successRate}%</span>
-                        </div>
-                      </div>
-                    </div>
+                  {/* Title and Description */}
+                  <h3 className="font-semibold text-sm mb-1 line-clamp-1 group-hover:text-[#9152DE] transition-colors">
+                    {automation.name}
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 mb-3">
+                    {automation.description}
+                  </p>
 
-                    <div className="flex flex-wrap gap-2 mt-4">
-                      {automation.actions.map((action, index) => (
-                        <div key={index} className="flex items-center gap-1 text-xs bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">
-                          {index > 0 && <ArrowRight className="h-3 w-3 text-gray-400" />}
-                          <span>{action}</span>
-                        </div>
-                      ))}
+                  {/* Category and Trigger */}
+                  <div className="space-y-2 mb-3">
+                    <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                      {getCategoryIcon(automation.category)}
+                      <span className="capitalize">{automation.category}</span>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs text-gray-600 dark:text-gray-400">
+                      <Clock className="h-3 w-3" />
+                      <span className="line-clamp-1">{automation.trigger}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-2 mb-3 py-3 border-t border-gray-200 dark:border-gray-700">
+                    <div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Runs</p>
+                      <p className="text-sm font-semibold">{automation.runsCount}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Success</p>
+                      <div className="flex items-center gap-1">
+                        <span className="text-sm font-semibold">{automation.successRate}%</span>
+                        {automation.successRate >= 95 ? (
+                          <CheckCircle className="h-3 w-3 text-green-500" />
+                        ) : automation.successRate >= 90 ? (
+                          <AlertCircle className="h-3 w-3 text-yellow-500" />
+                        ) : (
+                          <XCircle className="h-3 w-3 text-red-500" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Last Run */}
+                  <div className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                    Last run: <span className="font-medium">{automation.lastRun}</span>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-2">
                     {automation.status === 'active' ? (
-                      <Button variant="outline" size="sm">
-                        <Pause className="h-4 w-4 mr-2" />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 h-8 text-xs hover:bg-yellow-50 hover:border-yellow-400 hover:text-yellow-700"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Pause className="h-3 w-3 mr-1" />
                         Pause
                       </Button>
                     ) : (
-                      <Button variant="outline" size="sm">
-                        <Play className="h-4 w-4 mr-2" />
-                        Resume
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 h-8 text-xs hover:bg-green-50 hover:border-green-400 hover:text-green-700"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Play className="h-3 w-3 mr-1" />
+                        Start
                       </Button>
                     )}
-                    <Button variant="ghost" size="sm">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 p-0"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+
+                  {/* Hover overlay with actions */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#9152DE]/95 to-[#5F29A1]/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-3 p-4">
+                    <div className="text-white text-center">
+                      <h4 className="font-semibold text-sm mb-2">{automation.name}</h4>
+                      <div className="flex flex-wrap gap-1 justify-center mb-3">
+                        {automation.actions.slice(0, 3).map((action, index) => (
+                          <span key={index} className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                            {action}
+                          </span>
+                        ))}
+                        {automation.actions.length > 3 && (
+                          <span className="text-xs bg-white/20 px-2 py-1 rounded-full">
+                            +{automation.actions.length - 3} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="bg-white text-[#9152DE] hover:bg-gray-100"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Edit className="h-3 w-3 mr-1" />
+                        Edit
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        className="bg-white text-[#9152DE] hover:bg-gray-100"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Eye className="h-3 w-3 mr-1" />
+                        View
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Quick Add Card */}
+          <div className="fixed bottom-6 right-6 z-50">
+            <Button
+              className="rounded-full w-14 h-14 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] hover:from-[#5F29A1] hover:to-[#9152DE] shadow-lg"
+              onClick={() => setIsCreateOpen(true)}
+            >
+              <Plus className="h-6 w-6" />
+            </Button>
+          </div>
         </TabsContent>
 
         <TabsContent value="ai">

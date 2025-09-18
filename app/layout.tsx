@@ -9,7 +9,7 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'BetterFlow - Workplace Management Dashboard',
+  title: 'BetterFlow - Humans 🤝 AI in One Collaborative Space.',
   description: 'AI-powered workplace transparency and accountability platform',
 }
 

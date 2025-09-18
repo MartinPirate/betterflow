@@ -1,530 +1,413 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import {
-  Download,
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Users,
-  Clock,
-  Calendar,
-  Activity,
-  Briefcase,
-  Target,
-  ArrowUp,
-  ArrowDown,
-  BarChart3,
-  PieChart,
-  LineChart,
-  FileText,
-  Filter,
-  Eye,
-  Share2,
-  Printer
+  Download, Clock, Calendar, Users, FileSpreadsheet, Bell, CheckCircle,
+  TrendingUp, Filter, Search, ChevronRight, FileText, BarChart3,
+  Printer, Share2, Mail, Archive, Settings, RefreshCw, Eye, Play,
+  CalendarDays, UserCheck, ClipboardList, AlertCircle, Timer
 } from 'lucide-react';
 
-interface ChartData {
-  label: string;
-  value: number;
-  percentage?: number;
-  change?: number;
+interface Report {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  type: 'timesheet' | 'leaves' | 'compliance' | 'users' | 'reminder';
+  frequency: 'daily' | 'weekly' | 'monthly' | 'on-demand';
+  lastGenerated?: string;
+  nextScheduled?: string;
+  fileSize?: string;
+  format: string[];
+  color: string;
+  status: 'ready' | 'processing' | 'scheduled' | 'error';
+  downloads: number;
 }
 
-const revenueData: ChartData[] = [
-  { label: 'Jan', value: 245000, change: 12 },
-  { label: 'Feb', value: 285000, change: 8 },
-  { label: 'Mar', value: 325000, change: 15 },
-  { label: 'Apr', value: 295000, change: -5 },
-  { label: 'May', value: 345000, change: 10 },
-  { label: 'Jun', value: 385000, change: 18 }
-];
-
-const projectStatusData: ChartData[] = [
-  { label: 'Completed', value: 45, percentage: 35 },
-  { label: 'Active', value: 28, percentage: 22 },
-  { label: 'On Hold', value: 15, percentage: 12 },
-  { label: 'Planning', value: 40, percentage: 31 }
-];
-
-const departmentHours: ChartData[] = [
-  { label: 'Development', value: 1250, percentage: 40 },
-  { label: 'Design', value: 680, percentage: 22 },
-  { label: 'QA', value: 450, percentage: 14 },
-  { label: 'Management', value: 380, percentage: 12 },
-  { label: 'Marketing', value: 370, percentage: 12 }
-];
-
-const clientRevenue: ChartData[] = [
-  { label: 'NewbridgeFX', value: 850000, percentage: 28 },
-  { label: 'GlobalCorp', value: 620000, percentage: 20 },
-  { label: 'TechMart Inc', value: 520000, percentage: 17 },
-  { label: 'FinanceFirst', value: 480000, percentage: 16 },
-  { label: 'Others', value: 580000, percentage: 19 }
-];
-
 export default function ReportsPage() {
-  const [timeRange, setTimeRange] = useState('6months');
-  const [reportType, setReportType] = useState('overview');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedType, setSelectedType] = useState('all');
+  const [selectedReport, setSelectedReport] = useState<Report | null>(null);
 
-  const maxRevenue = Math.max(...revenueData.map(d => d.value));
+  const reports: Report[] = [
+    {
+      id: 1,
+      title: 'Timesheet Export',
+      description: 'Export all employee timesheets with detailed breakdown of hours, projects, and tasks',
+      icon: FileSpreadsheet,
+      type: 'timesheet',
+      frequency: 'on-demand',
+      lastGenerated: '2 hours ago',
+      fileSize: '2.4 MB',
+      format: ['Excel', 'CSV', 'PDF'],
+      color: 'from-blue-500 to-cyan-500',
+      status: 'ready',
+      downloads: 1250
+    },
+    {
+      id: 2,
+      title: 'Timesheet Report',
+      description: 'Comprehensive timesheet analysis with overtime calculations, billable hours, and productivity metrics',
+      icon: Clock,
+      type: 'timesheet',
+      frequency: 'weekly',
+      lastGenerated: '3 days ago',
+      nextScheduled: 'Monday 8:00 AM',
+      fileSize: '3.8 MB',
+      format: ['PDF', 'Excel'],
+      color: 'from-purple-500 to-pink-500',
+      status: 'scheduled',
+      downloads: 890
+    },
+    {
+      id: 3,
+      title: 'Leaves Report',
+      description: 'Complete leave management report including balances, upcoming leaves, and team availability',
+      icon: CalendarDays,
+      type: 'leaves',
+      frequency: 'monthly',
+      lastGenerated: '5 days ago',
+      nextScheduled: 'Dec 1, 2024',
+      fileSize: '1.6 MB',
+      format: ['PDF', 'Excel', 'CSV'],
+      color: 'from-green-500 to-emerald-500',
+      status: 'ready',
+      downloads: 567
+    },
+    {
+      id: 4,
+      title: 'Daily Reminders',
+      description: 'Automated daily summary of pending tasks, meetings, and important deadlines',
+      icon: Bell,
+      type: 'reminder',
+      frequency: 'daily',
+      lastGenerated: 'Today 6:00 AM',
+      nextScheduled: 'Tomorrow 6:00 AM',
+      fileSize: '0.5 MB',
+      format: ['Email', 'PDF'],
+      color: 'from-orange-500 to-red-500',
+      status: 'ready',
+      downloads: 2340
+    },
+    {
+      id: 5,
+      title: 'Weekly Compliance',
+      description: 'Compliance tracking report with policy adherence, training completion, and audit readiness',
+      icon: CheckCircle,
+      type: 'compliance',
+      frequency: 'weekly',
+      lastGenerated: '2 days ago',
+      nextScheduled: 'Sunday 11:00 PM',
+      fileSize: '4.2 MB',
+      format: ['PDF', 'Excel'],
+      color: 'from-indigo-500 to-purple-500',
+      status: 'processing',
+      downloads: 432
+    },
+    {
+      id: 6,
+      title: 'Users Monthly Report',
+      description: 'Detailed user activity report with login patterns, permissions, and system usage statistics',
+      icon: Users,
+      type: 'users',
+      frequency: 'monthly',
+      lastGenerated: '1 week ago',
+      nextScheduled: 'Dec 1, 2024',
+      fileSize: '5.1 MB',
+      format: ['PDF', 'Excel', 'HTML'],
+      color: 'from-teal-500 to-green-500',
+      status: 'ready',
+      downloads: 789
+    }
+  ];
+
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'ready':
+        return 'bg-green-100 text-green-800 border-green-200';
+      case 'processing':
+        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+      case 'scheduled':
+        return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'error':
+        return 'bg-red-100 text-red-800 border-red-200';
+      default:
+        return 'bg-gray-100 text-gray-800 border-gray-200';
+    }
+  };
+
+  const getFrequencyBadge = (frequency: string) => {
+    switch (frequency) {
+      case 'daily':
+        return 'bg-purple-100 text-purple-800';
+      case 'weekly':
+        return 'bg-blue-100 text-blue-800';
+      case 'monthly':
+        return 'bg-green-100 text-green-800';
+      case 'on-demand':
+        return 'bg-gray-100 text-gray-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const filteredReports = reports.filter(report => {
+    const matchesSearch = report.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                          report.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = selectedType === 'all' || report.type === selectedType;
+    return matchesSearch && matchesType;
+  });
+
+  const stats = {
+    totalReports: reports.length,
+    readyReports: reports.filter(r => r.status === 'ready').length,
+    totalDownloads: reports.reduce((sum, r) => sum + r.downloads, 0),
+    scheduledReports: reports.filter(r => r.status === 'scheduled').length
+  };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4 md:p-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Reports & Analytics</h1>
-          <p className="text-gray-500 dark:text-gray-400 mt-1">Track performance and analyze business metrics</p>
-        </div>
-        <div className="flex gap-3">
-          <Button variant="outline">
-            <Share2 className="h-4 w-4 mr-2" />
-            Share
-          </Button>
-          <Button variant="outline">
-            <Printer className="h-4 w-4 mr-2" />
-            Print
-          </Button>
-          <Button className="bg-[#9152DE] hover:bg-[#5F29A1]">
-            <Download className="h-4 w-4 mr-2" />
-            Export Report
-          </Button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <div className="flex gap-4 items-center">
-        <Select value={timeRange} onValueChange={setTimeRange}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Time Range" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="7days">Last 7 Days</SelectItem>
-            <SelectItem value="30days">Last 30 Days</SelectItem>
-            <SelectItem value="3months">Last 3 Months</SelectItem>
-            <SelectItem value="6months">Last 6 Months</SelectItem>
-            <SelectItem value="1year">Last Year</SelectItem>
-            <SelectItem value="custom">Custom Range</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={reportType} onValueChange={setReportType}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Report Type" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="overview">Overview</SelectItem>
-            <SelectItem value="financial">Financial</SelectItem>
-            <SelectItem value="projects">Projects</SelectItem>
-            <SelectItem value="timesheets">Timesheets</SelectItem>
-            <SelectItem value="clients">Clients</SelectItem>
-          </SelectContent>
-        </Select>
-        <Button variant="outline">
-          <Filter className="h-4 w-4 mr-2" />
-          More Filters
-        </Button>
-      </div>
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Revenue</p>
-                <p className="text-2xl font-bold">$2.05M</p>
-                <div className="flex items-center mt-2 text-green-600">
-                  <ArrowUp className="h-4 w-4 mr-1" />
-                  <span className="text-sm font-medium">12% from last period</span>
-                </div>
-              </div>
-              <div className="p-3 bg-green-100 rounded-full">
-                <DollarSign className="h-6 w-6 text-green-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Active Projects</p>
-                <p className="text-2xl font-bold">28</p>
-                <div className="flex items-center mt-2 text-blue-600">
-                  <ArrowUp className="h-4 w-4 mr-1" />
-                  <span className="text-sm font-medium">5 new this month</span>
-                </div>
-              </div>
-              <div className="p-3 bg-blue-100 rounded-full">
-                <Briefcase className="h-6 w-6 text-blue-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Total Hours</p>
-                <p className="text-2xl font-bold">3,130</p>
-                <div className="flex items-center mt-2 text-orange-600">
-                  <ArrowDown className="h-4 w-4 mr-1" />
-                  <span className="text-sm font-medium">8% from last period</span>
-                </div>
-              </div>
-              <div className="p-3 bg-orange-100 rounded-full">
-                <Clock className="h-6 w-6 text-orange-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">Client Satisfaction</p>
-                <p className="text-2xl font-bold">94%</p>
-                <div className="flex items-center mt-2 text-purple-600">
-                  <ArrowUp className="h-4 w-4 mr-1" />
-                  <span className="text-sm font-medium">2% improvement</span>
-                </div>
-              </div>
-              <div className="p-3 bg-purple-100 rounded-full">
-                <Target className="h-6 w-6 text-purple-600" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Main Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle>Revenue Overview</CardTitle>
-                <CardDescription>Monthly revenue for the last 6 months</CardDescription>
-              </div>
-              <LineChart className="h-5 w-5 text-gray-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {revenueData.map((month) => (
-                <div key={month.label}>
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium">{month.label}</span>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">
-                        ${(month.value / 1000).toFixed(0)}k
-                      </span>
-                      {month.change && (
-                        <span className={`text-xs font-medium flex items-center ${
-                          month.change > 0 ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {month.change > 0 ? <ArrowUp className="h-3 w-3" /> : <ArrowDown className="h-3 w-3" />}
-                          {Math.abs(month.change)}%
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
-                    <div
-                      className="h-full bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-full"
-                      style={{ width: `${(month.value / maxRevenue) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Project Status Chart */}
-        <Card>
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <div>
-                <CardTitle>Project Status Distribution</CardTitle>
-                <CardDescription>Current status of all projects</CardDescription>
-              </div>
-              <PieChart className="h-5 w-5 text-gray-400" />
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {projectStatusData.map((status, index) => {
-                const colors = ['bg-green-500', 'bg-blue-500', 'bg-yellow-500', 'bg-purple-500'];
-                return (
-                  <div key={status.label} className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${colors[index]}`} />
-                      <span className="text-sm font-medium">{status.label}</span>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{status.value} projects</span>
-                      <Badge variant="outline">{status.percentage}%</Badge>
-                    </div>
-                  </div>
-                );
-              })}
-              <div className="pt-4 border-t">
-                <div className="flex justify-between text-sm">
-                  <span className="font-medium">Total Projects</span>
-                  <span className="font-bold">128</span>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Detailed Reports Tabs */}
-      <Tabs defaultValue="department" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="department">Department</TabsTrigger>
-          <TabsTrigger value="client">Client</TabsTrigger>
-          <TabsTrigger value="employee">Employee</TabsTrigger>
-          <TabsTrigger value="project">Project</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="department">
-          <Card>
-            <CardHeader>
-              <CardTitle>Department Hours & Productivity</CardTitle>
-              <CardDescription>Time allocation and productivity metrics by department</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {departmentHours.map((dept) => (
-                  <div key={dept.label}>
-                    <div className="flex justify-between items-center mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">{dept.label}</span>
-                        <Badge variant="outline" className="text-xs">
-                          {dept.percentage}% of total
-                        </Badge>
-                      </div>
-                      <span className="text-sm text-gray-600 dark:text-gray-400">{dept.value} hours</span>
-                    </div>
-                    <Progress value={dept.percentage} className="h-2" />
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="client">
-          <Card>
-            <CardHeader>
-              <CardTitle>Client Revenue Distribution</CardTitle>
-              <CardDescription>Revenue breakdown by client</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-6">
-                {clientRevenue.map((client, index) => {
-                  const colors = [
-                    'from-purple-500 to-purple-600',
-                    'from-blue-500 to-blue-600',
-                    'from-green-500 to-green-600',
-                    'from-orange-500 to-orange-600',
-                    'from-gray-500 to-gray-600'
-                  ];
-                  return (
-                    <div key={client.label}>
-                      <div className="flex justify-between items-center mb-2">
-                        <div className="flex items-center gap-2">
-                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${colors[index]}`} />
-                          <span className="font-medium">{client.label}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
-                            ${(client.value / 1000).toFixed(0)}k
-                          </span>
-                          <Badge variant="outline">{client.percentage}%</Badge>
-                        </div>
-                      </div>
-                      <div className="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2">
-                        <div
-                          className={`h-full bg-gradient-to-r ${colors[index]} rounded-full`}
-                          style={{ width: `${client.percentage}%` }}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="employee">
-          <Card>
-            <CardHeader>
-              <CardTitle>Top Performing Employees</CardTitle>
-              <CardDescription>Employee performance metrics for the selected period</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="border-b">
-                    <tr>
-                      <th className="text-left py-2 font-medium text-sm">Employee</th>
-                      <th className="text-right py-2 font-medium text-sm">Hours</th>
-                      <th className="text-right py-2 font-medium text-sm">Tasks</th>
-                      <th className="text-right py-2 font-medium text-sm">Efficiency</th>
-                      <th className="text-right py-2 font-medium text-sm">Rating</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="py-3">John Doe</td>
-                      <td className="text-right">186</td>
-                      <td className="text-right">42</td>
-                      <td className="text-right">
-                        <Badge className="bg-green-100 text-green-800">98%</Badge>
-                      </td>
-                      <td className="text-right">⭐ 4.9</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="py-3">Sarah Smith</td>
-                      <td className="text-right">172</td>
-                      <td className="text-right">38</td>
-                      <td className="text-right">
-                        <Badge className="bg-green-100 text-green-800">95%</Badge>
-                      </td>
-                      <td className="text-right">⭐ 4.8</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="py-3">Mike Johnson</td>
-                      <td className="text-right">165</td>
-                      <td className="text-right">35</td>
-                      <td className="text-right">
-                        <Badge className="bg-yellow-100 text-yellow-800">92%</Badge>
-                      </td>
-                      <td className="text-right">⭐ 4.7</td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="py-3">Emily Chen</td>
-                      <td className="text-right">158</td>
-                      <td className="text-right">40</td>
-                      <td className="text-right">
-                        <Badge className="bg-yellow-100 text-yellow-800">90%</Badge>
-                      </td>
-                      <td className="text-right">⭐ 4.6</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="project">
-          <Card>
-            <CardHeader>
-              <CardTitle>Project Performance</CardTitle>
-              <CardDescription>Key metrics for active and recent projects</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="border rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="font-medium">E-Commerce Platform</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">NewbridgeFX</p>
-                    </div>
-                    <Badge className="bg-green-100 text-green-800">On Track</Badge>
-                  </div>
-                  <div className="grid grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Progress</p>
-                      <p className="font-medium">65%</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Budget Used</p>
-                      <p className="font-medium">$78.5k / $125k</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Hours</p>
-                      <p className="font-medium">520 / 800</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Deadline</p>
-                      <p className="font-medium">Jun 30, 2024</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="border rounded-lg p-4">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h4 className="font-medium">Mobile Banking App</h4>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">FinanceFirst</p>
-                    </div>
-                    <Badge className="bg-yellow-100 text-yellow-800">At Risk</Badge>
-                  </div>
-                  <div className="grid grid-cols-4 gap-4 text-sm">
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Progress</p>
-                      <p className="font-medium">45%</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Budget Used</p>
-                      <p className="font-medium">$89k / $200k</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Hours</p>
-                      <p className="font-medium">680 / 1500</p>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 dark:text-gray-400">Deadline</p>
-                      <p className="font-medium">Aug 15, 2024</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-
-      {/* Quick Actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Quick Actions</CardTitle>
-          <CardDescription>Generate and schedule reports</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="outline">
-              <FileText className="h-4 w-4 mr-2" />
-              Generate Monthly Report
-            </Button>
-            <Button variant="outline">
-              <Calendar className="h-4 w-4 mr-2" />
-              Schedule Weekly Reports
-            </Button>
-            <Button variant="outline">
-              <Eye className="h-4 w-4 mr-2" />
-              Create Custom Dashboard
-            </Button>
-            <Button variant="outline">
-              <BarChart3 className="h-4 w-4 mr-2" />
-              Compare Periods
-            </Button>
+      <div className="mb-6">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Reports</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Generate and export various reports</p>
           </div>
-        </CardContent>
-      </Card>
+
+          <div className="flex gap-3">
+            <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+              <Settings className="h-4 w-4" />
+              Settings
+            </button>
+            <button className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-xl font-semibold hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-lg hover:shadow-xl">
+              <Calendar className="h-5 w-5" />
+              Schedule Report
+            </button>
+          </div>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Total Reports</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{stats.totalReports}</p>
+              </div>
+              <FileText className="h-8 w-8 text-[#9152DE]" />
+            </div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Ready</p>
+                <p className="text-2xl font-bold text-green-600">{stats.readyReports}</p>
+              </div>
+              <CheckCircle className="h-8 w-8 text-green-600" />
+            </div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Downloads</p>
+                <p className="text-2xl font-bold text-blue-600">{(stats.totalDownloads / 1000).toFixed(1)}k</p>
+              </div>
+              <Download className="h-8 w-8 text-blue-600" />
+            </div>
+          </div>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Scheduled</p>
+                <p className="text-2xl font-bold text-orange-600">{stats.scheduledReports}</p>
+              </div>
+              <Clock className="h-8 w-8 text-orange-600" />
+            </div>
+          </div>
+        </div>
+
+        {/* Search and Filters */}
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search reports..."
+                  className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+                />
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="px-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#9152DE] focus:border-transparent"
+              >
+                <option value="all">All Types</option>
+                <option value="timesheet">Timesheet</option>
+                <option value="leaves">Leaves</option>
+                <option value="compliance">Compliance</option>
+                <option value="users">Users</option>
+                <option value="reminder">Reminders</option>
+              </select>
+              <button className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                <Filter className="h-5 w-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Report Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredReports.map((report) => {
+            const Icon = report.icon;
+            return (
+              <div
+                key={report.id}
+                className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:shadow-xl transition-all duration-200 hover:scale-105 cursor-pointer"
+              >
+                {/* Card Header with Gradient */}
+                <div className={`h-2 bg-gradient-to-r ${report.color}`}></div>
+
+                {/* Card Body */}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`p-3 bg-gradient-to-br ${report.color} rounded-lg shadow-md`}>
+                      <Icon className="h-6 w-6 text-white" />
+                    </div>
+                    <div className="flex flex-col items-end gap-2">
+                      <span className={`text-xs px-3 py-1 rounded-full border ${getStatusBadge(report.status)}`}>
+                        {report.status}
+                      </span>
+                      <span className={`text-xs px-3 py-1 rounded-full ${getFrequencyBadge(report.frequency)}`}>
+                        {report.frequency}
+                      </span>
+                    </div>
+                  </div>
+
+                  <h3 className="font-semibold text-lg text-gray-900 dark:text-gray-100 mb-2">
+                    {report.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+                    {report.description}
+                  </p>
+
+                  {/* Report Info */}
+                  <div className="space-y-2 mb-4">
+                    {report.lastGenerated && (
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-gray-500 dark:text-gray-400">Last Generated</span>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">{report.lastGenerated}</span>
+                      </div>
+                    )}
+                    {report.nextScheduled && (
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-gray-500 dark:text-gray-400">Next Scheduled</span>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">{report.nextScheduled}</span>
+                      </div>
+                    )}
+                    {report.fileSize && (
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-gray-500 dark:text-gray-400">File Size</span>
+                        <span className="text-gray-700 dark:text-gray-300 font-medium">{report.fileSize}</span>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-500 dark:text-gray-400">Downloads</span>
+                      <span className="text-gray-700 dark:text-gray-300 font-medium">{report.downloads.toLocaleString()}</span>
+                    </div>
+                  </div>
+
+                  {/* Format Badges */}
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {report.format.map((format, index) => (
+                      <span
+                        key={index}
+                        className="text-xs px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded"
+                      >
+                        {format}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-2 pt-4 border-t border-gray-100 dark:border-gray-700">
+                    {report.status === 'ready' ? (
+                      <>
+                        <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-lg hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200">
+                          <Download className="h-4 w-4" />
+                          Export
+                        </button>
+                        <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                          <Eye className="h-4 w-4" />
+                        </button>
+                      </>
+                    ) : report.status === 'processing' ? (
+                      <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-yellow-100 text-yellow-800 rounded-lg cursor-not-allowed" disabled>
+                        <RefreshCw className="h-4 w-4 animate-spin" />
+                        Processing...
+                      </button>
+                    ) : report.status === 'scheduled' ? (
+                      <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-colors">
+                        <Play className="h-4 w-4" />
+                        Generate Now
+                      </button>
+                    ) : (
+                      <button className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-red-100 text-red-800 rounded-lg hover:bg-red-200 transition-colors">
+                        <AlertCircle className="h-4 w-4" />
+                        Retry
+                      </button>
+                    )}
+
+                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                      <Share2 className="h-4 w-4" />
+                    </button>
+                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                      <Mail className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {filteredReports.length === 0 && (
+          <div className="text-center py-12">
+            <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <p className="text-gray-500 dark:text-gray-400">No reports found</p>
+            <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">Try adjusting your search or filters</p>
+          </div>
+        )}
+
+        {/* Quick Actions */}
+        <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl p-6 border border-gray-200 dark:border-gray-700">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <button className="flex flex-col items-center gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <FileSpreadsheet className="h-8 w-8 text-[#9152DE]" />
+              <span className="text-sm font-medium">Generate All</span>
+            </button>
+            <button className="flex flex-col items-center gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <Archive className="h-8 w-8 text-blue-600" />
+              <span className="text-sm font-medium">Archive Old</span>
+            </button>
+            <button className="flex flex-col items-center gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <Mail className="h-8 w-8 text-green-600" />
+              <span className="text-sm font-medium">Email Reports</span>
+            </button>
+            <button className="flex flex-col items-center gap-2 p-4 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+              <Printer className="h-8 w-8 text-orange-600" />
+              <span className="text-sm font-medium">Print All</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
