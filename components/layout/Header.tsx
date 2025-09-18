@@ -10,7 +10,9 @@ import {
   User,
   Settings,
   Menu,
-  X
+  X,
+  Sparkles,
+  AlignJustify
 } from 'lucide-react';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -18,9 +20,10 @@ import { ThemeToggle } from '@/components/theme-toggle';
 interface HeaderProps {
   onMenuToggle?: () => void;
   isMobileMenuOpen?: boolean;
+  isCollapsed?: boolean;
 }
 
-export default function Header({ onMenuToggle, isMobileMenuOpen = false }: HeaderProps) {
+export default function Header({ onMenuToggle, isMobileMenuOpen = false, isCollapsed = false }: HeaderProps) {
   const { user, logout } = useAuth();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -34,50 +37,51 @@ export default function Header({ onMenuToggle, isMobileMenuOpen = false }: Heade
   const unreadCount = notifications.filter(n => n.unread).length;
 
   return (
-    <header className="bg-white dark:bg-[#263244] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-40">
+    <header className="bg-gray-50 dark:bg-[#1F2937] border-b border-gray-200 dark:border-[#374151] sticky top-0 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Left Section - Logo and Menu */}
-          <div className="flex items-center flex-1">
+        <div className="relative flex items-center h-16">
+          {/* Left Section - Menu Toggle */}
+          <div className="flex items-center">
             <button
               onClick={onMenuToggle}
-              className="p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 lg:hidden"
+              className="p-2 rounded-xl text-gray-600 dark:text-gray-300 hover:text-[#9152DE] dark:hover:text-[#9152DE] hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 group lg:hidden"
+              aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-
-            <div className="flex items-center">
-              <div className="flex-shrink-0 flex items-center">
-                <div className="w-8 h-8 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-sm">BF</span>
-                </div>
-                <span className="text-xl font-bold text-gray-900 dark:text-gray-100 hidden sm:block">
-                  BetterFlow
-                </span>
+              <div className="flex flex-col items-center justify-center w-6 h-6">
+                <span className={`block w-5 h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+                <span className={`block w-5 h-0.5 bg-current my-1 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+                <span className={`block w-5 h-0.5 bg-current transform transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
               </div>
-            </div>
+            </button>
           </div>
 
-          {/* Center Section - Search Bar */}
-          <div className="flex-1 max-w-xl mx-4 hidden md:block">
-            <div className="relative">
+          {/* Center Section - AI Button positioned between start and search */}
+          <div className="absolute left-1/4 flex items-center">
+            {/* AI Button - Centered between left edge and search */}
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] text-white rounded-full hover:from-[#5F29A1] hover:to-[#204782] transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
+              <Sparkles className="h-3.5 w-3.5 animate-spin" />
+              <span className="text-xs font-medium hidden sm:inline">Ask BF-AI</span>
+            </button>
+          </div>
+
+          {/* Right Center Section - Search Bar */}
+          <div className="absolute right-1/4 flex items-center">
+            {/* Search Input - Reduced width */}
+            <div className="relative w-48 lg:w-56">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                <Search className="h-4 w-4 text-gray-400 dark:text-gray-500" />
               </div>
               <input
                 type="text"
-                placeholder="Search anything..."
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-[#9152DE] focus:border-[#9152DE] sm:text-sm"
+                placeholder="Search..."
+                className="block w-full pl-9 pr-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-full leading-5 bg-gray-50 dark:bg-gray-800 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-[#9152DE] focus:border-transparent transition-all duration-200"
+                aria-label="Search"
               />
             </div>
           </div>
 
           {/* Right Section - Actions */}
-          <div className="flex items-center space-x-4 flex-1 justify-end">
+          <div className="ml-auto flex items-center space-x-4">
             <ThemeToggle />
             <div className="relative">
               <button

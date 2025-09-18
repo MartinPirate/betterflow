@@ -9,7 +9,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 relative overflow-hidden">
-      {/* Animated decorative color patches */}
+      {/* Animated decorative color patches - Extended 2.5% into page */}
       <motion.div
         animate={{
           scale: [1, 1.2, 1],
@@ -20,7 +20,7 @@ export default function AuthLayout({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-br from-[#9152DE] to-[#5F29A1] rounded-full opacity-20 blur-3xl"
+        className="absolute -top-36 -left-36 w-64 h-64 bg-gradient-to-br from-[#9152DE] to-[#5F29A1] rounded-full opacity-20 blur-3xl"
       />
 
       <motion.div
@@ -33,7 +33,7 @@ export default function AuthLayout({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute -bottom-40 -right-40 w-80 h-80 bg-gradient-to-br from-[#204782] to-[#9152DE] rounded-full opacity-20 blur-3xl"
+        className="absolute -bottom-36 -right-36 w-64 h-64 bg-gradient-to-br from-[#204782] to-[#9152DE] rounded-full opacity-20 blur-3xl"
       />
 
       <motion.div
@@ -46,7 +46,7 @@ export default function AuthLayout({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/4 -right-20 w-60 h-60 bg-gradient-to-br from-[#5F29A1] to-[#204782] rounded-full opacity-15 blur-3xl"
+        className="absolute top-1/4 -right-20 w-48 h-48 bg-gradient-to-br from-[#5F29A1] to-[#204782] rounded-full opacity-15 blur-3xl"
       />
 
       <motion.div
@@ -59,10 +59,10 @@ export default function AuthLayout({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute bottom-1/4 -left-20 w-60 h-60 bg-gradient-to-br from-[#9152DE] to-[#5F29A1] rounded-full opacity-15 blur-3xl"
+        className="absolute bottom-1/4 -left-20 w-48 h-48 bg-gradient-to-br from-[#9152DE] to-[#5F29A1] rounded-full opacity-15 blur-3xl"
       />
 
-      {/* Additional smaller patches for more depth */}
+      {/* Additional patches for subtle depth */}
       <motion.div
         animate={{
           scale: [1, 1.5, 1],
@@ -73,7 +73,34 @@ export default function AuthLayout({
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        className="absolute top-1/2 left-1/4 w-40 h-40 bg-gradient-to-br from-[#9152DE] to-[#204782] rounded-full opacity-10 blur-3xl"
+        className="absolute top-1/2 left-1/20 w-32 h-32 bg-gradient-to-br from-[#9152DE] to-[#204782] rounded-full opacity-10 blur-3xl"
+      />
+
+      {/* Minimal corner patches */}
+      <motion.div
+        animate={{
+          scale: [1, 1.1, 1],
+          rotate: [0, 45, 0],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute top-1 right-1/20 w-36 h-36 bg-gradient-to-br from-[#204782] to-[#5F29A1] rounded-full opacity-12 blur-3xl"
+      />
+
+      <motion.div
+        animate={{
+          scale: [1, 1.1, 1],
+          rotate: [0, -45, 0],
+        }}
+        transition={{
+          duration: 24,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="absolute bottom-1 left-1/20 w-36 h-36 bg-gradient-to-br from-[#5F29A1] to-[#9152DE] rounded-full opacity-12 blur-3xl"
       />
 
       {/* Content */}

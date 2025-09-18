@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { getMenuItemsForRole } from '@/lib/navigation/menu-items';
 import Link from 'next/link';
@@ -11,48 +9,64 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 interface SidebarProps {
   isOpen?: boolean;
   onClose?: () => void;
+  isCollapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
-export default function Sidebar({ isOpen = true, onClose }: SidebarProps) {
+export default function Sidebar({ isOpen = true, onClose, isCollapsed = false, onToggleCollapse }: SidebarProps) {
   const { user } = useAuth();
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   if (!user) return null;
 
   const menuItems = getMenuItemsForRole(user.role);
 
   const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
+    if (onToggleCollapse) {
+      onToggleCollapse();
+    }
   };
 
   return (
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 bg-gray-900/50 lg:hidden z-30"
+          className="fixed inset-0 bg-gray-900/50 lg:hidden z-[90]"
           onClick={onClose}
         />
       )}
 
       <aside
         className={cn(
-          'fixed lg:static inset-y-0 left-0 z-40 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-all duration-300 ease-in-out lg:translate-x-0',
+          'fixed top-0 h-screen left-0 z-50 bg-white dark:bg-[#263244] border-r border-gray-200 dark:border-[#374151] transform transition-all duration-300 ease-in-out lg:translate-x-0',
           isOpen ? 'translate-x-0' : '-translate-x-full',
-          isCollapsed ? 'w-20' : 'w-64'
+          // Mobile: always full width (w-64), Desktop: responsive width based on collapse
+          'w-64',
+          isCollapsed ? 'lg:w-20' : 'lg:w-64'
         )}
       >
         <div className="flex flex-col h-full">
-          {/* Collapse Toggle Button */}
+          {/* Logo and Collapse Toggle */}
           <div className={cn(
             "flex items-center p-4 border-b border-gray-200 dark:border-gray-700",
             isCollapsed ? "justify-center" : "justify-between"
           )}>
-            {!isCollapsed && (
-              <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Menu
-              </span>
-            )}
+            <div className="flex items-center">
+              {isCollapsed ? (
+                <div className="w-10 h-10 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">BF</span>
+                </div>
+              ) : (
+                <div className="flex items-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-[#9152DE] to-[#5F29A1] rounded-lg flex items-center justify-center mr-3">
+                    <span className="text-white font-bold text-lg">BF</span>
+                  </div>
+                  <span className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                    BetterFlow
+                  </span>
+                </div>
+              )}
+            </div>
             <button
               onClick={toggleCollapse}
               className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors hidden lg:block"
